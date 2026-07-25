@@ -1,0 +1,111 @@
+@import "tailwindcss";
+
+@theme {
+  /* "Playbill editorial" palette — warm bone paper, warm ink, oxblood accent */
+  --color-bone: oklch(0.955 0.012 85);
+  --color-bone-deep: oklch(0.925 0.016 82);
+  --color-ink: oklch(0.235 0.012 60);
+  --color-ink-soft: oklch(0.45 0.014 60);
+  --color-muted: oklch(0.56 0.02 70);
+  --color-line: oklch(0.235 0.012 60 / 14%);
+  --color-oxblood: oklch(0.42 0.14 25);
+  --color-oxblood-bright: oklch(0.52 0.17 27);
+  --color-night: oklch(0.185 0.008 50);
+  --color-night-soft: oklch(0.24 0.01 50);
+
+  --font-display: var(--font-fraunces), "Georgia", serif;
+  --font-body: var(--font-archivo), "Helvetica Neue", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-bone);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Subtle film-grain over the whole site */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+::selection {
+  background: var(--color-oxblood);
+  color: var(--color-bone);
+}
+
+/* Eyebrow label: small caps tracking with a leading rule */
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-oxblood);
+}
+.eyebrow::before {
+  content: "";
+  width: 2rem;
+  height: 1px;
+  background: var(--color-oxblood);
+}
+
+/* Big display headings */
+.display {
+  font-family: var(--font-display);
+  font-variation-settings: "opsz" 144;
+  letter-spacing: -0.02em;
+}
+
+/* Outlined ghost type used behind the hero */
+.ghost-text {
+  -webkit-text-stroke: 1px oklch(0.235 0.012 60 / 16%);
+  color: transparent;
+  user-select: none;
+}
+
+/* Photo frame with offset accent border */
+.frame {
+  position: relative;
+}
+.frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translate(14px, 14px);
+  border: 1px solid var(--color-oxblood);
+  z-index: -1;
+}
+
+/* Underline-on-hover nav links */
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  height: 1px;
+  width: 100%;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s ease;
+}
+.nav-link:hover::after,
+.nav-link[data-active="true"]::after {
+  transform: scaleX(1);
+}

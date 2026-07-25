@@ -1,0 +1,31 @@
+{
+  "videos": [
+    {
+      "title": "Acting Reel",
+      "kind": "Reel",
+      "year": "2026",
+      "duration": "2:14",
+      "url": "",
+      "description": "Selected film and television work, 2024–2026.",
+      "featured": true
+    },
+    {
+      "title": "Northbound — Scene",
+      "kind": "Film Clip",
+      "year": "2026",
+      "duration": "1:47",
+      "url": "",
+      "description": "Marko confronts his brother at the border crossing.",
+      "featured": false
+    },
+    {
+      "title": "Dramatic Monologue",
+      "kind": "Self Tape",
+      "year": "2025",
+      "duration": "1:12",
+      "url": "",
+      "description": "Original monologue, shot on location in Brooklyn.",
+      "featured": false
+    }
+  ]
+}

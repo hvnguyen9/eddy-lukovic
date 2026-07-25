@@ -1,0 +1,10 @@
+{
+  "photos": [
+    { "src": "/images/headshot-primary.svg", "alt": "Primary headshot", "caption": "Primary headshot — 2026", "aspect": "portrait" },
+    { "src": "/images/headshot-alt.svg", "alt": "Alternate headshot", "caption": "Alternate — commercial", "aspect": "portrait" },
+    { "src": "/images/still-01.svg", "alt": "Production still from Northbound", "caption": "Still — 'Northbound' (2026)", "aspect": "landscape" },
+    { "src": "/images/still-02.svg", "alt": "Production still from The Seagull", "caption": "On stage — 'The Seagull' (2025)", "aspect": "landscape" },
+    { "src": "/images/headshot-theatrical.svg", "alt": "Theatrical headshot", "caption": "Theatrical — 2025", "aspect": "portrait" },
+    { "src": "/images/still-03.svg", "alt": "Behind the scenes", "caption": "Behind the scenes — 'The Quiet Hours'", "aspect": "landscape" }
+  ]
+}

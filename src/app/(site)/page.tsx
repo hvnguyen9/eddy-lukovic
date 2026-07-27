@@ -5,21 +5,25 @@ import {
   getBio,
   getFeaturedVideo,
   getPhotos,
+  getProjects,
   getResume,
   getSite,
 } from "@/lib/content";
 
 export default async function HomePage() {
-  const [site, bio, resume, featuredVideo, allPhotos] = await Promise.all([
-    getSite(),
-    getBio(),
-    getResume(),
-    getFeaturedVideo(),
-    getPhotos(),
-  ]);
+  const [site, bio, resume, featuredVideo, allPhotos, projects] =
+    await Promise.all([
+      getSite(),
+      getBio(),
+      getResume("acting"),
+      getFeaturedVideo(),
+      getPhotos(),
+      getProjects(),
+    ]);
   const photos = allPhotos.slice(0, 4);
+  const featuredProjects = projects.slice(0, 3);
 
-  // Top credit from each resume section → "Selected work" strip
+  // Top credit from each acting resume section → "Selected work" strip
   const selectedWork = resume.sections
     .map((section) => ({ section: section.title, credit: section.credits[0] }))
     .filter((entry) => entry.credit);
@@ -56,7 +60,7 @@ export default async function HomePage() {
                 Watch the reel
               </Link>
               <Link
-                href="/resume"
+                href="/resume/acting"
                 className="nav-link text-[0.72rem] font-semibold tracking-[0.2em] uppercase"
               >
                 View resume →
@@ -81,9 +85,9 @@ export default async function HomePage() {
       <section className="border-t border-line bg-bone-deep">
         <div className="mx-auto max-w-6xl px-6 py-20">
           <div className="flex items-baseline justify-between">
-            <p className="eyebrow">Selected work</p>
+            <p className="eyebrow">Selected acting work</p>
             <Link
-              href="/resume"
+              href="/resume/acting"
               className="nav-link text-[0.72rem] font-semibold tracking-[0.2em] uppercase text-ink-soft"
             >
               Full resume
@@ -113,6 +117,49 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* Directing teaser — minimal project grid */}
+      <section className="mx-auto max-w-6xl px-6 py-20">
+        <div className="flex items-baseline justify-between">
+          <p className="eyebrow">Directing</p>
+          <Link
+            href="/gallery/directing"
+            className="nav-link text-[0.72rem] font-semibold tracking-[0.2em] uppercase text-ink-soft"
+          >
+            All directing work
+          </Link>
+        </div>
+        <div className="mt-10 grid gap-x-8 gap-y-12 sm:grid-cols-3">
+          {featuredProjects.map((project) => (
+            <Link
+              key={project.slug}
+              href={`/gallery/directing/${project.slug}`}
+              className="group block"
+            >
+              <div className="overflow-hidden">
+                <Image
+                  src={project.cover.src}
+                  alt={project.cover.alt}
+                  width={1200}
+                  height={800}
+                  className="block aspect-[3/2] w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                />
+              </div>
+              <div className="mt-3 flex items-baseline justify-between gap-3">
+                <h3 className="display text-xl transition-colors group-hover:text-oxblood">
+                  {project.title}
+                </h3>
+                <span className="shrink-0 text-[0.68rem] font-semibold tracking-[0.2em] text-muted uppercase">
+                  {project.year}
+                </span>
+              </div>
+              <p className="mt-0.5 text-sm text-ink-soft">
+                {[project.role, project.company].filter(Boolean).join(" · ")}
+              </p>
+            </Link>
+          ))}
+        </div>
+      </section>
+
       {/* Reel — dark letterbox section */}
       {featuredVideo && (
         <section className="bg-night text-bone">
@@ -127,7 +174,7 @@ export default async function HomePage() {
                 href="/media"
                 className="nav-link text-[0.72rem] font-semibold tracking-[0.2em] text-bone/70 uppercase hover:text-bone"
               >
-                All videos & photos →
+                All videos →
               </Link>
             </div>
           </div>

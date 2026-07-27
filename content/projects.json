@@ -1,0 +1,58 @@
+{
+  "projects": [
+    {
+      "slug": "static",
+      "title": "Static",
+      "year": "2026",
+      "company": "Independent Short Film",
+      "role": "Writer / Director",
+      "description": "A radio operator alone on a night shift picks up a voice that shouldn't exist. Shot over four nights in a decommissioned broadcast station in Queens.",
+      "cover": { "src": "/images/still-01.svg", "alt": "Still from Static" },
+      "images": [
+        { "src": "/images/still-01.svg", "alt": "Still from Static", "caption": "Night shift — frame from the final cut" },
+        { "src": "/images/still-04.svg", "alt": "Rehearsal for Static", "caption": "Table read, week one" }
+      ],
+      "videoUrl": ""
+    },
+    {
+      "slug": "the-pillowman",
+      "title": "The Pillowman",
+      "year": "2025",
+      "company": "Basement Theatre Lab",
+      "role": "Director",
+      "description": "Martin McDonagh's pitch-black fable staged in the round, with the audience close enough to feel implicated. Four actors, one bare bulb, no interval.",
+      "cover": { "src": "/images/still-02.svg", "alt": "Stage still from The Pillowman" },
+      "images": [
+        { "src": "/images/still-02.svg", "alt": "Stage still from The Pillowman", "caption": "Katurian under the single practical" },
+        { "src": "/images/still-04.svg", "alt": "Rehearsal still", "caption": "Rehearsal — staging the interrogation" }
+      ],
+      "videoUrl": ""
+    },
+    {
+      "slug": "proof",
+      "title": "Proof",
+      "year": "2024",
+      "company": "Hudson Stage Co.",
+      "role": "Director",
+      "description": "David Auburn's chamber piece about inheritance — of genius, and of doubt. Played on a single porch set that slowly lost its walls as the play went on.",
+      "cover": { "src": "/images/still-03.svg", "alt": "Production photo from Proof" },
+      "images": [
+        { "src": "/images/still-03.svg", "alt": "Production photo from Proof", "caption": "Act II — the porch, stripped" }
+      ],
+      "videoUrl": ""
+    },
+    {
+      "slug": "orbiting",
+      "title": "Orbiting",
+      "year": "2023",
+      "company": "Downtown Shorts Festival",
+      "role": "Director — one-act",
+      "description": "A ten-minute two-hander about a couple deciding whether to move apart, told entirely while circling each other. Festival audience award.",
+      "cover": { "src": "/images/still-04.svg", "alt": "Still from Orbiting" },
+      "images": [
+        { "src": "/images/still-04.svg", "alt": "Still from Orbiting", "caption": "Blocking rehearsal — the orbit" }
+      ],
+      "videoUrl": ""
+    }
+  ]
+}

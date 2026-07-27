@@ -48,8 +48,11 @@ export async function SiteFooter() {
             </p>
             <ul className="mt-3 space-y-1 text-sm">
               <li><Link href="/about" className="text-bone/90 hover:text-oxblood-bright">About</Link></li>
-              <li><Link href="/resume" className="text-bone/90 hover:text-oxblood-bright">Resume</Link></li>
-              <li><Link href="/media" className="text-bone/90 hover:text-oxblood-bright">Media</Link></li>
+              <li><Link href="/resume/acting" className="text-bone/90 hover:text-oxblood-bright">Acting Resume</Link></li>
+              <li><Link href="/resume/directing" className="text-bone/90 hover:text-oxblood-bright">Directing Resume</Link></li>
+              <li><Link href="/gallery/acting" className="text-bone/90 hover:text-oxblood-bright">Acting Gallery</Link></li>
+              <li><Link href="/gallery/directing" className="text-bone/90 hover:text-oxblood-bright">Directing Work</Link></li>
+              <li><Link href="/media" className="text-bone/90 hover:text-oxblood-bright">Reel</Link></li>
             </ul>
           </div>
         </div>

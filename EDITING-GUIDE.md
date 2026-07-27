@@ -6,7 +6,7 @@ Your site has a private editing area — like a control panel — at:
 
 Log in with your email. What you see there is organized exactly like the site:
 
-## The five things you can edit
+## The seven things you can edit
 
 1. **Site Settings** — your name, tagline, city, email, phone, social links, your agent's info,
    your vitals (height, hair, unions…), and your resume PDF. Upload a new PDF here whenever your
@@ -15,15 +15,24 @@ Log in with your email. What you see there is organized exactly like the site:
 2. **Bio** — the short intro on the homepage, the full paragraphs on the About page, the quote
    shown in big type, and your two main photos (headshot + About-page portrait).
 
-3. **Resume** — your credit sections (Film, Television, Theatre — you can add more, e.g.
-   "Commercial"), each with rows for title / role / production / director / year. Drag rows to
-   reorder them. Training and Special Skills live here too.
+3. **Acting Resume** — your acting credit sections (Film, Television, Theatre — you can add
+   more, e.g. "Commercial"), each with rows for title / role / production / director / year.
+   Drag rows to reorder them. Training and Special Skills live here too.
 
-4. **Photos** — the gallery. Click "+" to add a photo, upload the image, give it a short caption
-   (e.g. "Primary headshot — 2026"), pick portrait or landscape, and set a sort number
-   (lower = shown first).
+4. **Directing Resume** — same layout, for your directing credits (leave the "Director" field
+   on each row empty unless you're crediting someone else, e.g. on assistant-directing rows).
 
-5. **Videos** — your reel and clips. Paste a normal YouTube or Vimeo link — the site turns it
+5. **Acting Gallery Photos** — the acting photo gallery. Click "+" to add a photo, upload the
+   image, give it a short caption (e.g. "Primary headshot — 2026"), pick portrait or landscape,
+   and set a sort number (lower = shown first).
+
+6. **Directing Projects** — each production you've directed gets its own page. Give it a title,
+   click Generate on the web address, add the year/venue/your role, a short description, a cover
+   image (landscape looks best on the grid), a photo gallery, and optionally a YouTube/Vimeo
+   link (trailer or archival footage). The first three (by sort order) also appear on the
+   homepage.
+
+7. **Videos** — your reel and clips. Paste a normal YouTube or Vimeo link — the site turns it
    into a player automatically. Mark one video as **Featured** to make it the big one on the
    homepage. If a video has no link yet, the site shows an elegant "coming soon" slate.
 

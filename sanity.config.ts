@@ -11,7 +11,8 @@ import { schemaTypes } from "./sanity/schemas";
 const singletons = [
   { type: "siteSettings", title: "Site Settings" },
   { type: "bio", title: "Bio" },
-  { type: "resume", title: "Resume" },
+  { type: "actingResume", title: "Acting Resume" },
+  { type: "directingResume", title: "Directing Resume" },
 ];
 
 const structure = (S: StructureBuilder) =>
@@ -25,7 +26,8 @@ const structure = (S: StructureBuilder) =>
           .child(S.document().schemaType(s.type).documentId(s.type))
       ),
       S.divider(),
-      S.documentTypeListItem("photo").title("Photos"),
+      S.documentTypeListItem("photo").title("Acting Gallery Photos"),
+      S.documentTypeListItem("project").title("Directing Projects"),
       S.documentTypeListItem("video").title("Videos"),
     ]);
 

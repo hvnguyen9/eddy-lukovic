@@ -14,6 +14,7 @@ import siteJson from "../../content/site.json";
 import bioJson from "../../content/bio.json";
 import resumeJson from "../../content/resume.json";
 import photosJson from "../../content/photos.json";
+import projectsJson from "../../content/projects.json";
 import videosJson from "../../content/videos.json";
 
 export interface SocialLink {
@@ -60,6 +61,20 @@ export interface ResumeContent {
   sections: { title: string; credits: Credit[] }[];
   training: { title: string; detail: string; year: string }[];
   skills: string[];
+}
+
+export type Discipline = "acting" | "directing";
+
+export interface Project {
+  slug: string;
+  title: string;
+  year: string;
+  company: string;
+  role: string;
+  description: string;
+  cover: ImageRef;
+  images: (ImageRef & { caption?: string })[];
+  videoUrl: string;
 }
 
 export interface Photo extends ImageRef {
@@ -122,14 +137,45 @@ export async function getBio(): Promise<BioContent> {
   return { ...fallback, ...Object.fromEntries(Object.entries(doc).filter(([, v]) => v != null)) } as BioContent;
 }
 
-export async function getResume(): Promise<ResumeContent> {
+// Acting and directing resumes are separate CMS documents with the same shape.
+export async function getResume(discipline: Discipline): Promise<ResumeContent> {
+  const docType = discipline === "acting" ? "actingResume" : "directingResume";
   const doc = await fetchSanity<ResumeContent | null>(`
-    *[_type == "resume"][0]{
-      sections[]{title, credits[]{title, role, company, director, year}},
-      training[]{title, detail, year},
-      skills
+    *[_type == "${docType}"][0]{
+      sections[]{title, credits[]{
+        title, role, company,
+        "director": coalesce(director, ""),
+        year
+      }},
+      "training": coalesce(training[]{title, detail, year}, []),
+      "skills": coalesce(skills, [])
     }`);
-  return doc ?? (resumeJson as ResumeContent);
+  return doc ?? (resumeJson[discipline] as ResumeContent);
+}
+
+export async function getProjects(): Promise<Project[]> {
+  const docs = await fetchSanity<Project[] | null>(`
+    *[_type == "project" && defined(slug.current)] | order(order asc){
+      "slug": slug.current,
+      title,
+      "year": coalesce(year, ""),
+      "company": coalesce(company, ""),
+      "role": coalesce(role, ""),
+      "description": coalesce(description, ""),
+      "cover": select(defined(cover.asset) => {"src": cover.asset->url, "alt": coalesce(cover.alt, title)}),
+      "images": coalesce(images[defined(asset)]{"src": asset->url, "alt": coalesce(alt, ^.title), "caption": coalesce(caption, "")}, []),
+      "videoUrl": coalesce(videoUrl, "")
+    }`);
+  if (docs && docs.length > 0) {
+    // A project without a cover falls back to its first gallery image.
+    return docs.map((p) => ({ ...p, cover: p.cover ?? p.images[0] ?? { src: "", alt: p.title } }));
+  }
+  return projectsJson.projects as Project[];
+}
+
+export async function getProject(slug: string): Promise<Project | undefined> {
+  const projects = await getProjects();
+  return projects.find((p) => p.slug === slug);
 }
 
 export async function getPhotos(): Promise<Photo[]> {

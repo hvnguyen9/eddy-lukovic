@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#232a24"/>
+      <stop offset="0.6" stop-color="#131814"/>
+      <stop offset="1" stop-color="#0b0e0c"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.35" cy="0.35" r="0.6">
+      <stop offset="0" stop-color="#b8c9b4" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#b8c9b4" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.07 0"/>
+      <feComposite operator="over" in2="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g filter="url(#grain)">
+    <rect width="1200" height="800" fill="url(#bg)"/>
+    <rect width="1200" height="800" fill="url(#glow)"/>
+    <!-- rehearsal room: table + three figures -->
+    <rect x="240" y="520" width="720" height="26" fill="#060807"/>
+    <rect x="290" y="546" width="20" height="150" fill="#060807"/>
+    <rect x="890" y="546" width="20" height="150" fill="#060807"/>
+    <g fill="#080b09">
+      <ellipse cx="400" cy="420" rx="52" ry="64"/>
+      <path d="M400 476 C 342 476 314 520 310 520 L 490 520 C 486 520 458 476 400 476 Z"/>
+      <ellipse cx="620" cy="400" rx="56" ry="68"/>
+      <path d="M620 460 C 556 460 528 520 524 520 L 716 520 C 712 520 684 460 620 460 Z"/>
+      <ellipse cx="840" cy="424" rx="50" ry="62"/>
+      <path d="M840 478 C 786 478 760 520 756 520 L 924 520 C 920 520 894 478 840 478 Z"/>
+    </g>
+    <path d="M668 340 C 680 384 676 440 656 480" stroke="#cbdcc6" stroke-width="5" fill="none" opacity="0.4" stroke-linecap="round"/>
+  </g>
+  <text x="600" y="768" text-anchor="middle" font-family="Georgia, serif" font-size="20" letter-spacing="6" fill="#5f6f5c" opacity="0.9">REHEARSAL STILL PLACEHOLDER</text>
+</svg>

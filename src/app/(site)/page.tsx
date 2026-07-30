@@ -60,7 +60,7 @@ export default async function HomePage() {
                 Watch the reel
               </Link>
               <Link
-                href="/resume/acting"
+                href="/resume"
                 className="nav-link text-[0.72rem] font-semibold tracking-[0.2em] uppercase"
               >
                 View resume →
@@ -87,7 +87,7 @@ export default async function HomePage() {
           <div className="flex items-baseline justify-between">
             <p className="eyebrow">Selected acting work</p>
             <Link
-              href="/resume/acting"
+              href="/resume"
               className="nav-link text-[0.72rem] font-semibold tracking-[0.2em] uppercase text-ink-soft"
             >
               Full resume

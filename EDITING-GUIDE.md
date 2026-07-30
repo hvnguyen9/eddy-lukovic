@@ -22,6 +22,9 @@ Log in with your email. What you see there is organized exactly like the site:
 4. **Directing Resume** — same layout, for your directing credits (leave the "Director" field
    on each row empty unless you're crediting someone else, e.g. on assistant-directing rows).
 
+   Both resumes appear together on the site's single Resume page — Acting first, then
+   Directing — but you edit them as two separate documents.
+
 5. **Acting Gallery Photos** — the acting photo gallery. Click "+" to add a photo, upload the
    image, give it a short caption (e.g. "Primary headshot — 2026"), pick portrait or landscape,
    and set a sort number (lower = shown first).

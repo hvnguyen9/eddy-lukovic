@@ -9,7 +9,8 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
-      { source: "/resume", destination: "/resume/acting", permanent: false },
+      // Resume was briefly split into /resume/acting + /resume/directing
+      { source: "/resume/:discipline(acting|directing)", destination: "/resume", permanent: false },
       { source: "/gallery", destination: "/gallery/acting", permanent: false },
     ];
   },

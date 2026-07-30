@@ -9,13 +9,7 @@ type NavItem = NavLeaf | { label: string; items: NavLeaf[] };
 
 const nav: NavItem[] = [
   { href: "/about", label: "About" },
-  {
-    label: "Resume",
-    items: [
-      { href: "/resume/acting", label: "Acting" },
-      { href: "/resume/directing", label: "Directing" },
-    ],
-  },
+  { href: "/resume", label: "Resume" },
   {
     label: "Gallery",
     items: [
@@ -23,7 +17,6 @@ const nav: NavItem[] = [
       { href: "/gallery/directing", label: "Directing" },
     ],
   },
-  { href: "/media", label: "Reel" },
   { href: "/contact", label: "Contact" },
 ];
 

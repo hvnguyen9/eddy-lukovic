@@ -52,7 +52,7 @@ export default async function AboutPage() {
           </blockquote>
           <div className="mt-12 flex flex-wrap gap-4">
             <Link
-              href="/resume/acting"
+              href="/resume"
               className="bg-ink px-7 py-3.5 text-[0.72rem] font-semibold tracking-[0.2em] text-bone uppercase transition-colors hover:bg-oxblood"
             >
               View resume

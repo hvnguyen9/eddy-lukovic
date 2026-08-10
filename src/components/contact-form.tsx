@@ -4,9 +4,10 @@ import { useState } from "react";
 
 // Sends via Web3Forms (free, no backend): https://web3forms.com
 // The access key is public-safe (it only identifies the destination inbox).
-// Until NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY is set, submitting shows a friendly
-// "not connected yet" notice instead — the form can ship before it's wired up.
-const ACCESS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
+// It normally comes from Site Settings → "Contact form key" in the studio;
+// the NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY env var works as a fallback. With
+// neither set, submitting shows a friendly "not connected yet" notice.
+const ENV_ACCESS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
 
 type Status = "idle" | "sending" | "success" | "error" | "unconfigured";
 
@@ -15,8 +16,15 @@ const labelClass =
 const inputClass =
   "mt-2 w-full border border-line bg-transparent px-4 py-3 text-base outline-none transition-colors placeholder:text-muted/60 focus:border-oxblood";
 
-export function ContactForm({ fallbackEmail }: { fallbackEmail: string }) {
+export function ContactForm({
+  fallbackEmail,
+  accessKey,
+}: {
+  fallbackEmail: string;
+  accessKey?: string;
+}) {
   const [status, setStatus] = useState<Status>("idle");
+  const key = accessKey || ENV_ACCESS_KEY;
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -26,7 +34,7 @@ export function ContactForm({ fallbackEmail }: { fallbackEmail: string }) {
     // Honeypot: real users never fill this hidden field.
     if (data.get("botcheck")) return;
 
-    if (!ACCESS_KEY) {
+    if (!key) {
       setStatus("unconfigured");
       return;
     }
@@ -37,7 +45,7 @@ export function ContactForm({ fallbackEmail }: { fallbackEmail: string }) {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
-          access_key: ACCESS_KEY,
+          access_key: key,
           name: data.get("name"),
           email: data.get("email"),
           message: data.get("message"),
@@ -134,20 +142,34 @@ export function ContactForm({ fallbackEmail }: { fallbackEmail: string }) {
 
       {status === "error" && (
         <p className="text-sm text-oxblood">
-          Something went wrong sending your message. Please email{" "}
-          <a href={`mailto:${fallbackEmail}`} className="underline underline-offset-4">
-            {fallbackEmail}
-          </a>{" "}
-          directly.
+          Something went wrong sending your message.
+          {fallbackEmail ? (
+            <>
+              {" "}Please email{" "}
+              <a href={`mailto:${fallbackEmail}`} className="underline underline-offset-4">
+                {fallbackEmail}
+              </a>{" "}
+              directly.
+            </>
+          ) : (
+            " Please try again in a moment."
+          )}
         </p>
       )}
       {status === "unconfigured" && (
         <p className="text-sm text-oxblood">
-          The form isn&rsquo;t connected yet — please email{" "}
-          <a href={`mailto:${fallbackEmail}`} className="underline underline-offset-4">
-            {fallbackEmail}
-          </a>{" "}
-          directly for now.
+          The form isn&rsquo;t taking messages yet.
+          {fallbackEmail ? (
+            <>
+              {" "}Please email{" "}
+              <a href={`mailto:${fallbackEmail}`} className="underline underline-offset-4">
+                {fallbackEmail}
+              </a>{" "}
+              directly for now.
+            </>
+          ) : (
+            " Please check back soon."
+          )}
         </p>
       )}
     </form>

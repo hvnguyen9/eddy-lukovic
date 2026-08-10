@@ -66,13 +66,15 @@ For Eddy's non-technical instructions, see [EDITING-GUIDE.md](EDITING-GUIDE.md).
 
 The `/contact` form sends through [Web3Forms](https://web3forms.com) — free (250
 submissions/month), no backend, no dashboard to maintain, honeypot spam protection built in.
-Until connected, submitting shows a "not connected yet — email directly" notice.
+Until connected, submitting shows a "not taking messages yet" notice.
 
 1. Go to web3forms.com → **Create your Access Key** → enter the email that should receive
    messages (Eddy's). The key arrives by email instantly; no account needed.
-2. Set `NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY=<key>` in `.env.local` and in Vercel env vars, redeploy.
-3. The key is public-safe (it only routes to the inbox), so `NEXT_PUBLIC_` is fine. If spam ever
-   becomes a problem, Web3Forms supports hCaptcha — add it then, not before.
+2. Paste the key into **Studio → Site Settings → Contact form key** and Publish. Live within a
+   minute — no deploy needed. (`NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY` still works as an env-var
+   fallback when the CMS field is blank.)
+3. The key is public-safe (it only routes to the inbox). If spam ever becomes a problem,
+   Web3Forms supports hCaptcha — add it then, not before.
 
 ## Development
 

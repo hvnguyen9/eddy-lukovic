@@ -21,6 +21,10 @@ the text to hide it; fill it in to bring it back.
    exactly the file you upload here, in a new tab (viewers can save or print it from there).
    Remove the file and the Resume link disappears from the menu entirely.
 
+   The **contact form key** also lives here: grab a free key at web3forms.com (enter the
+   email that should receive messages), paste it in, Publish — the Contact form starts
+   delivering to your inbox within a minute.
+
 2. **Bio** — the sentence BELOW your name on the homepage ("Short bio"), the full paragraphs
    and pull quote on the About page, your homepage headshot, the About page main photo, and
    the **candid photos** — the little montage of small photos under the main About photo.

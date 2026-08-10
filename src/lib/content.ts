@@ -42,6 +42,7 @@ export interface SiteContent {
   email: string;
   phone: string;
   resumePdfUrl: string;
+  contactFormKey: string;
   heroLinks: LinkRef[];
   socials: LinkRef[];
   representation: { label: string; name: string; contact: string };
@@ -126,6 +127,7 @@ export async function getSite(): Promise<SiteContent> {
       "email": coalesce(email, ""),
       "phone": coalesce(phone, ""),
       "resumePdfUrl": coalesce(resumePdf.asset->url, ""),
+      "contactFormKey": coalesce(contactFormKey, ""),
       "heroLinks": coalesce(heroLinks[defined(label) && defined(url)]{label, "url": url}, []),
       "socials": coalesce(socials[defined(label) && defined(url)]{label, url}, []),
       "representation": {
@@ -146,6 +148,7 @@ export async function getSite(): Promise<SiteContent> {
     email: doc?.email ?? "",
     phone: doc?.phone ?? "",
     resumePdfUrl: doc?.resumePdfUrl ?? "",
+    contactFormKey: doc?.contactFormKey ?? "",
     heroLinks: doc?.heroLinks ?? [],
     socials: doc?.socials ?? [],
     representation: doc?.representation ?? { label: "Representation", name: "", contact: "" },

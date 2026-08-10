@@ -21,7 +21,7 @@ export default async function ContactPage() {
             Send a message
           </p>
           <div className="mt-6">
-            <ContactForm fallbackEmail={site.email} />
+            <ContactForm fallbackEmail={site.email} accessKey={site.contactFormKey} />
           </div>
         </div>
 

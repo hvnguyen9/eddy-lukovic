@@ -66,6 +66,13 @@ export const siteSettings = defineType({
       ],
     }),
     defineField({
+      name: "contactFormKey",
+      title: "Contact form key",
+      type: "string",
+      description:
+        "Powers the Contact page form. Get a free access key at web3forms.com (enter the email that should receive messages — the key arrives instantly). Paste it here and the form goes live within a minute. Leave blank and the form politely asks visitors to email directly instead.",
+    }),
+    defineField({
       name: "representation",
       title: "Representation (optional)",
       type: "object",

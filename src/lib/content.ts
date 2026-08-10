@@ -1,23 +1,34 @@
 // Single source of truth for all site content.
 //
 // Two modes, switched by NEXT_PUBLIC_SANITY_PROJECT_ID:
-//  - CMS off (default): serves the seed content in /content/*.json.
-//  - CMS on: fetches from Sanity (edited at /studio), falling back to the
-//    seed JSON for any document that hasn't been created yet.
-// The JSON shapes mirror the Sanity schemas, so pages never care which
-// mode is active.
+//  - CMS off: serves the demo seed content in /content/*.json.
+//  - CMS on (production): everything comes from Sanity, and BLANK MEANS
+//    HIDDEN — empty fields stay empty ("" / []) so pages can simply omit
+//    them. No seed placeholders leak into the live site. The one exception
+//    is the site name, which falls back so <title> and the wordmark never
+//    render blank.
 
 import { createClient } from "next-sanity";
 import { apiVersion, dataset, projectId, sanityEnabled } from "../../sanity/env";
 
 import siteJson from "../../content/site.json";
 import bioJson from "../../content/bio.json";
-import resumeJson from "../../content/resume.json";
-import photosJson from "../../content/photos.json";
+import actorJson from "../../content/actor.json";
+import directorJson from "../../content/director.json";
+import galleriesJson from "../../content/galleries.json";
 import projectsJson from "../../content/projects.json";
 import videosJson from "../../content/videos.json";
 
-export interface SocialLink {
+export interface ImageRef {
+  src: string;
+  alt: string;
+}
+
+export interface CaptionedImage extends ImageRef {
+  caption?: string;
+}
+
+export interface LinkRef {
   label: string;
   url: string;
 }
@@ -31,39 +42,34 @@ export interface SiteContent {
   email: string;
   phone: string;
   resumePdfUrl: string;
-  socials: SocialLink[];
+  heroLinks: LinkRef[];
+  socials: LinkRef[];
   representation: { label: string; name: string; contact: string };
-  vitals: { label: string; value: string }[];
-}
-
-export interface ImageRef {
-  src: string;
-  alt: string;
 }
 
 export interface BioContent {
   shortBio: string;
   paragraphs: string[];
   pullQuote: string;
-  headshot: ImageRef;
-  secondaryPhoto: ImageRef;
+  headshot: ImageRef | null;
+  secondaryPhoto: ImageRef | null;
+  candids: ImageRef[];
 }
 
-export interface Credit {
+export interface ActorPageContent {
+  image: ImageRef | null;
+  intro: string;
+}
+
+export interface DirectorPageContent {
+  leadImage: ImageRef | null;
+  statement: string;
+}
+
+export interface ActingGallery {
   title: string;
-  role: string;
-  company: string;
-  director: string;
-  year: string;
+  photos: CaptionedImage[];
 }
-
-export interface ResumeContent {
-  sections: { title: string; credits: Credit[] }[];
-  training: { title: string; detail: string; year: string }[];
-  skills: string[];
-}
-
-export type Discipline = "acting" | "directing";
 
 export interface Project {
   slug: string;
@@ -72,14 +78,9 @@ export interface Project {
   company: string;
   role: string;
   description: string;
-  cover: ImageRef;
-  images: (ImageRef & { caption?: string })[];
+  cover: ImageRef | null;
+  images: CaptionedImage[];
   videoUrl: string;
-}
-
-export interface Photo extends ImageRef {
-  caption: string;
-  aspect: "portrait" | "landscape";
 }
 
 export interface Video {
@@ -104,114 +105,137 @@ async function fetchSanity<T>(query: string): Promise<T | null> {
   try {
     return await client.fetch<T>(query, {}, { next: { revalidate: REVALIDATE_SECONDS } });
   } catch {
-    // CMS unreachable — serve seed content rather than crashing the site.
     return null;
   }
 }
 
+// GROQ fragment: image field -> {src, alt} object, or null when unset.
+const img = (field: string, altFallback = '""') =>
+  `select(defined(${field}.asset) => {"src": ${field}.asset->url, "alt": coalesce(${field}.alt, ${altFallback})})`;
+
 export async function getSite(): Promise<SiteContent> {
-  const fallback = siteJson as SiteContent;
-  const doc = await fetchSanity<Partial<SiteContent> | null>(`
+  const seed = siteJson as SiteContent;
+  if (!sanityEnabled) return seed;
+
+  const doc = await fetchSanity<Partial<SiteContent>>(`
     *[_type == "siteSettings"][0]{
-      firstName, lastName, tagline, location, email, phone,
-      "resumePdfUrl": resumePdf.asset->url,
-      socials[]{label, url},
-      "representation": {"label": "Representation", "name": representation.name, "contact": representation.contact},
-      vitals[]{label, value}
+      "firstName": coalesce(firstName, ""),
+      "lastName": coalesce(lastName, ""),
+      "tagline": coalesce(tagline, ""),
+      "location": coalesce(location, ""),
+      "email": coalesce(email, ""),
+      "phone": coalesce(phone, ""),
+      "resumePdfUrl": coalesce(resumePdf.asset->url, ""),
+      "heroLinks": coalesce(heroLinks[defined(label) && defined(url)]{label, "url": url}, []),
+      "socials": coalesce(socials[defined(label) && defined(url)]{label, url}, []),
+      "representation": {
+        "label": "Representation",
+        "name": coalesce(representation.name, ""),
+        "contact": coalesce(representation.contact, "")
+      }
     }`);
-  if (!doc) return fallback;
-  const merged = { ...fallback, ...Object.fromEntries(Object.entries(doc).filter(([, v]) => v != null)) } as SiteContent;
-  merged.name = `${merged.firstName} ${merged.lastName}`;
-  return merged;
+
+  const first = doc?.firstName || seed.firstName;
+  const last = doc?.lastName || seed.lastName;
+  return {
+    firstName: first,
+    lastName: last,
+    name: `${first} ${last}`.trim(),
+    tagline: doc?.tagline ?? "",
+    location: doc?.location ?? "",
+    email: doc?.email ?? "",
+    phone: doc?.phone ?? "",
+    resumePdfUrl: doc?.resumePdfUrl ?? "",
+    heroLinks: doc?.heroLinks ?? [],
+    socials: doc?.socials ?? [],
+    representation: doc?.representation ?? { label: "Representation", name: "", contact: "" },
+  };
 }
 
 export async function getBio(): Promise<BioContent> {
-  const fallback = bioJson as BioContent;
-  const doc = await fetchSanity<Partial<BioContent> | null>(`
+  if (!sanityEnabled) return bioJson as BioContent;
+  const doc = await fetchSanity<BioContent>(`
     *[_type == "bio"][0]{
-      shortBio, paragraphs, pullQuote,
-      "headshot": select(defined(headshot.asset) => {"src": headshot.asset->url, "alt": coalesce(headshot.alt, "Headshot")}),
-      "secondaryPhoto": select(defined(secondaryPhoto.asset) => {"src": secondaryPhoto.asset->url, "alt": coalesce(secondaryPhoto.alt, "Portrait")})
+      "shortBio": coalesce(shortBio, ""),
+      "paragraphs": coalesce(paragraphs, []),
+      "pullQuote": coalesce(pullQuote, ""),
+      "headshot": ${img("headshot", '"Headshot"')},
+      "secondaryPhoto": ${img("secondaryPhoto", '"Portrait"')},
+      "candids": coalesce(candids[defined(asset)]{"src": asset->url, "alt": coalesce(alt, "Photo")}, [])
     }`);
-  if (!doc) return fallback;
-  return { ...fallback, ...Object.fromEntries(Object.entries(doc).filter(([, v]) => v != null)) } as BioContent;
+  return (
+    doc ?? { shortBio: "", paragraphs: [], pullQuote: "", headshot: null, secondaryPhoto: null, candids: [] }
+  );
 }
 
-// Acting and directing resumes are separate CMS documents with the same shape.
-export async function getResume(discipline: Discipline): Promise<ResumeContent> {
-  const docType = discipline === "acting" ? "actingResume" : "directingResume";
-  const doc = await fetchSanity<ResumeContent | null>(`
-    *[_type == "${docType}"][0]{
-      sections[]{title, credits[]{
-        title, role, company,
-        "director": coalesce(director, ""),
-        year
-      }},
-      "training": coalesce(training[]{title, detail, year}, []),
-      "skills": coalesce(skills, [])
+export async function getActorPage(): Promise<ActorPageContent> {
+  if (!sanityEnabled) return actorJson as ActorPageContent;
+  const doc = await fetchSanity<ActorPageContent>(`
+    *[_type == "actorPage"][0]{
+      "image": ${img("image", '"Headshot"')},
+      "intro": coalesce(intro, "")
     }`);
-  return doc ?? (resumeJson[discipline] as ResumeContent);
+  return doc ?? { image: null, intro: "" };
+}
+
+export async function getDirectorPage(): Promise<DirectorPageContent> {
+  if (!sanityEnabled) return directorJson as DirectorPageContent;
+  const doc = await fetchSanity<DirectorPageContent>(`
+    *[_type == "directorPage"][0]{
+      "leadImage": ${img("leadImage", '"Directing work"')},
+      "statement": coalesce(statement, "")
+    }`);
+  return doc ?? { leadImage: null, statement: "" };
+}
+
+export async function getActingGalleries(): Promise<ActingGallery[]> {
+  if (!sanityEnabled) return galleriesJson.galleries as ActingGallery[];
+  const docs = await fetchSanity<ActingGallery[]>(`
+    *[_type == "actingGallery"] | order(order asc){
+      "title": coalesce(title, ""),
+      "photos": coalesce(photos[defined(asset)]{
+        "src": asset->url,
+        "alt": coalesce(alt, caption, "Photo"),
+        "caption": coalesce(caption, "")
+      }, [])
+    }`);
+  return (docs ?? []).filter((g) => g.photos.length > 0);
 }
 
 export async function getProjects(): Promise<Project[]> {
-  const docs = await fetchSanity<Project[] | null>(`
-    *[_type == "project" && defined(slug.current)] | order(order asc){
-      "slug": slug.current,
+  if (!sanityEnabled) return projectsJson.projects as Project[];
+  const docs = await fetchSanity<Project[]>(`
+    *[_type == "project"] | order(order asc){
+      "slug": coalesce(slug.current, _id),
       title,
       "year": coalesce(year, ""),
       "company": coalesce(company, ""),
       "role": coalesce(role, ""),
       "description": coalesce(description, ""),
-      "cover": select(defined(cover.asset) => {"src": cover.asset->url, "alt": coalesce(cover.alt, title)}),
+      "cover": ${img("cover", "title")},
       "images": coalesce(images[defined(asset)]{"src": asset->url, "alt": coalesce(alt, ^.title), "caption": coalesce(caption, "")}, []),
       "videoUrl": coalesce(videoUrl, "")
     }`);
-  if (docs && docs.length > 0) {
-    // A project without a cover falls back to its first gallery image.
-    return docs.map((p) => ({ ...p, cover: p.cover ?? p.images[0] ?? { src: "", alt: p.title } }));
-  }
-  return projectsJson.projects as Project[];
-}
-
-export async function getProject(slug: string): Promise<Project | undefined> {
-  const projects = await getProjects();
-  return projects.find((p) => p.slug === slug);
-}
-
-export async function getPhotos(): Promise<Photo[]> {
-  const docs = await fetchSanity<Photo[] | null>(`
-    *[_type == "photo" && defined(image.asset)] | order(order asc){
-      "src": image.asset->url,
-      "alt": coalesce(alt, caption, "Photo"),
-      "caption": coalesce(caption, ""),
-      "aspect": coalesce(aspect, "portrait")
-    }`);
-  if (docs && docs.length > 0) return docs;
-  return photosJson.photos as Photo[];
+  return docs ?? [];
 }
 
 export async function getVideos(): Promise<Video[]> {
-  const docs = await fetchSanity<Video[] | null>(`
+  if (!sanityEnabled) return videosJson.videos as Video[];
+  const docs = await fetchSanity<Video[]>(`
     *[_type == "video"] | order(order asc){
       title,
-      "kind": coalesce(kind, "Reel"),
+      "kind": coalesce(kind, ""),
       "year": coalesce(year, ""),
       "duration": coalesce(duration, ""),
       "url": coalesce(url, ""),
       "description": coalesce(description, ""),
       "featured": coalesce(featured, false)
     }`);
-  if (docs && docs.length > 0) return docs;
-  return videosJson.videos as Video[];
-}
-
-export async function getFeaturedVideo(): Promise<Video | undefined> {
-  const videos = await getVideos();
-  return videos.find((v) => v.featured) ?? videos[0];
+  return docs ?? [];
 }
 
 // Turns a YouTube or Vimeo URL into an embeddable iframe src, or null if the
-// URL is empty/unrecognized (pages then render a "coming soon" placeholder).
+// URL is empty/unrecognized.
 export function toEmbedUrl(url: string): string | null {
   if (!url) return null;
   const yt = url.match(

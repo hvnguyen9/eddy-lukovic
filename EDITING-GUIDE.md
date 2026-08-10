@@ -4,49 +4,48 @@ Your site has a private editing area — like a control panel — at:
 
 **yourdomain.com/studio**
 
-Log in with your email. What you see there is organized exactly like the site:
+Log in with your email. Golden rule: **nothing goes live until you press Publish** on the
+document you edited. If something you added isn't showing on the site, 99% of the time it's
+still a draft — open it and hit Publish. After publishing, give the site about a minute and
+refresh.
+
+Second rule: **blank means hidden.** Any field you leave empty (a tagline, a phone number, a
+homepage button, your representation) simply disappears from the site — nothing breaks. Delete
+the text to hide it; fill it in to bring it back.
 
 ## The seven things you can edit
 
-1. **Site Settings** — your name, tagline, city, email, phone, social links, your agent's info,
-   your vitals (height, hair, unions…), and your resume PDF. Upload a new PDF here whenever your
-   printable resume changes — the site's "Download PDF" button always points to the latest one.
+1. **Site Settings** — your name, the tagline (the small line ABOVE your name on the
+   homepage), location, email, phone, the homepage buttons (e.g. "Watch the reel"), social
+   links, representation, and your **resume PDF** — the Resume page displays and offers a
+   download of exactly the file you upload here.
 
-2. **Bio** — the short intro on the homepage, the full paragraphs on the About page, the quote
-   shown in big type, and your two main photos (headshot + About-page portrait).
+2. **Bio** — the sentence BELOW your name on the homepage ("Short bio"), the full paragraphs
+   and pull quote on the About page, your homepage headshot, the About page main photo, and
+   the **candid photos** — the little montage of small photos under the main About photo.
 
-3. **Acting Resume** — your acting credit sections (Film, Television, Theatre — you can add
-   more, e.g. "Commercial"), each with rows for title / role / production / director / year.
-   Drag rows to reorder them. Training and Special Skills live here too.
+3. **Actor Page** — the main image and intro paragraph at the top of the Actor page.
 
-4. **Directing Resume** — same layout, for your directing credits (leave the "Director" field
-   on each row empty unless you're crediting someone else, e.g. on assistant-directing rows).
+4. **Director Page** — the wide lead image across the top of the Director page and your
+   artistic statement (~5 sentences).
 
-   Both resumes appear together on the site's single Resume page — Acting first, then
-   Directing — but you edit them as two separate documents.
+5. **Acting Galleries** — labeled photo galleries on the Actor page (e.g. "Headshots",
+   "Production Stills"). Create one gallery per label, then add photos inside it — the first
+   photo is the big lead image, the rest appear as clickable thumbnails underneath. Drag
+   photos to reorder.
 
-5. **Acting Gallery Photos** — the acting photo gallery. Click "+" to add a photo, upload the
-   image, give it a short caption (e.g. "Primary headshot — 2026"), pick portrait or landscape,
-   and set a sort number (lower = shown first).
+6. **Directing Projects** — one per production, shown as galleries on the Director page.
+   Title, year, venue, your role, a short description, a cover photo (the lead image), the
+   photo gallery (thumbnails under the lead), and optionally a YouTube/Vimeo link.
 
-6. **Directing Projects** — each production you've directed gets its own page. Give it a title,
-   click Generate on the web address, add the year/venue/your role, a short description, a cover
-   image (landscape looks best on the grid), a photo gallery, and optionally a YouTube/Vimeo
-   link (trailer or archival footage). The first three (by sort order) also appear on the
-   homepage.
-
-7. **Videos** — your reel and clips. Paste a normal YouTube or Vimeo link — the site turns it
-   into a player automatically. Mark one video as **Featured** to make it the big one on the
-   homepage. If a video has no link yet, the site shows an elegant "coming soon" slate.
-
-## Publishing
-
-Nothing goes live until you press the **Publish** button on the document you edited.
-After publishing, give the site about a minute and refresh — your change will be there.
+7. **Videos** — the clips on the Actor page. Paste a normal YouTube or Vimeo link — the site
+   turns it into a player automatically.
 
 ## Tips
 
-- You can't break the design — the layout, fonts, and colors are fixed; you only change the words
+- You can't break the design — layout, fonts, and colors are fixed; you only change the words
   and pictures inside it.
 - Photos: upload the highest-quality version you have; the site resizes automatically.
 - If something looks wrong after an edit, just re-open the document, fix it, and Publish again.
+- If a photo you added isn't showing up: you almost certainly haven't published yet — look for
+  the Publish button at the bottom of the document.

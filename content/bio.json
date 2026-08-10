@@ -8,5 +8,10 @@
   ],
   "pullQuote": "The best acting disappears — you don't watch it, you recognize it.",
   "headshot": { "src": "/images/headshot-primary.svg", "alt": "Eddy Lukovic — primary headshot" },
-  "secondaryPhoto": { "src": "/images/headshot-alt.svg", "alt": "Eddy Lukovic — alternate portrait" }
+  "secondaryPhoto": { "src": "/images/headshot-alt.svg", "alt": "Eddy Lukovic — portrait" },
+  "candids": [
+    { "src": "/images/still-03.svg", "alt": "Behind the scenes" },
+    { "src": "/images/still-04.svg", "alt": "In rehearsal" },
+    { "src": "/images/headshot-theatrical.svg", "alt": "Theatrical portrait" }
+  ]
 }

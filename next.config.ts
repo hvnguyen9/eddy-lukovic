@@ -9,9 +9,13 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
-      // Resume was briefly split into /resume/acting + /resume/directing
+      // Pre-2026-08 structure: split resumes, gallery pages, media page
       { source: "/resume/:discipline(acting|directing)", destination: "/resume", permanent: false },
-      { source: "/gallery", destination: "/gallery/acting", permanent: false },
+      { source: "/gallery", destination: "/actor", permanent: false },
+      { source: "/gallery/acting", destination: "/actor", permanent: false },
+      { source: "/gallery/directing", destination: "/director", permanent: false },
+      { source: "/gallery/directing/:slug", destination: "/director", permanent: false },
+      { source: "/media", destination: "/actor", permanent: false },
     ];
   },
 };

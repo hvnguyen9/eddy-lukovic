@@ -4,17 +4,9 @@ export const project = defineType({
   name: "project",
   title: "Directing Project",
   type: "document",
-  description: "A directing credit with its own page: photos, description, optional video.",
+  description: "A production gallery on the Director page: cover photo, gallery, description, optional video.",
   fields: [
     defineField({ name: "title", title: "Title", type: "string", validation: (r) => r.required() }),
-    defineField({
-      name: "slug",
-      title: "Web address",
-      type: "slug",
-      description: "Click Generate — becomes the page URL, e.g. /gallery/directing/the-pillowman",
-      options: { source: "title" },
-      validation: (r) => r.required(),
-    }),
     defineField({ name: "year", title: "Year", type: "string" }),
     defineField({ name: "company", title: "Production / venue", type: "string", description: 'e.g. "Basement Theatre Lab"' }),
     defineField({ name: "role", title: "Your role", type: "string", description: 'e.g. "Director" or "Writer / Director"', initialValue: "Director" }),
@@ -30,13 +22,14 @@ export const project = defineType({
       title: "Cover image",
       type: "image",
       options: { hotspot: true },
-      description: "The image shown on the Directing grid. Landscape works best.",
+      description: "The gallery's lead image. Landscape works best.",
       fields: [defineField({ name: "alt", title: "Description (for accessibility)", type: "string" })],
     }),
     defineField({
       name: "images",
       title: "Photo gallery",
       type: "array",
+      description: "Shown as thumbnails under the cover — drag to reorder. Remember to hit Publish after adding photos!",
       of: [
         {
           type: "image",

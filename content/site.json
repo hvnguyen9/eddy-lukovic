@@ -7,22 +7,16 @@
   "email": "contact@eddylukovic.com",
   "phone": "",
   "resumePdfUrl": "/resume/eddy-lukovic-resume.pdf",
+  "heroLinks": [
+    { "label": "Watch the reel", "url": "/actor#videos" },
+    { "label": "View resume", "url": "/resume" }
+  ],
   "socials": [
-    { "label": "Instagram", "url": "https://instagram.com/eddylukovic" },
-    { "label": "IMDb", "url": "https://www.imdb.com/" },
-    { "label": "Backstage", "url": "https://www.backstage.com/" }
+    { "label": "Instagram", "url": "https://instagram.com/eddylukovic" }
   ],
   "representation": {
     "label": "Representation",
-    "name": "Placeholder Talent Agency",
-    "contact": "agents@placeholdertalent.com"
-  },
-  "vitals": [
-    { "label": "Height", "value": "6'0\"" },
-    { "label": "Hair", "value": "Dark Brown" },
-    { "label": "Eyes", "value": "Brown" },
-    { "label": "Voice", "value": "Baritone" },
-    { "label": "Languages", "value": "English, Serbian, French (conversational)" },
-    { "label": "Unions", "value": "SAG-AFTRA Eligible" }
-  ]
+    "name": "",
+    "contact": ""
+  }
 }

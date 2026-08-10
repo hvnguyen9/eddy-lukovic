@@ -14,35 +14,35 @@ font swaps are one-file changes.
 
 ## Pages
 
-Acting and directing are split in the galleries (Gallery ▾ dropdown); the resume is one
-combined page (Acting block, then Directing block).
-
 | Route | Content |
 |---|---|
-| `/` | Hero + selected acting work + directing teaser grid + showreel + about teaser + photo strip |
-| `/about` | Full bio, pull quote, vitals (height/hair/unions/…) |
-| `/resume` | Combined credit tables — Acting then Directing — plus merged training/skills, Download PDF |
-| `/gallery/acting` | Photo masonry (headshots + stills) |
-| `/gallery/directing` | Minimal project grid (Saki-Kawamura-style) |
-| `/gallery/directing/[slug]` | Project page: description, photo gallery, optional video embed (SSG) |
-| `/media` | Reel + video clips (dark section; not in the nav — linked from home/footer) |
-| `/contact` | Contact form (Web3Forms) + direct email, representation, social links |
+| `/` | Minimal hero only: toolbar, name, headshot, optional CMS-driven buttons. No footer. |
+| `/about` | Bio paragraphs + pull quote; main photo with a candid-photo montage beneath |
+| `/actor` | Main image + intro, Videos band (embeds), labeled photo galleries (lead + thumbnails) |
+| `/director` | Edge-to-edge lead image, artistic statement, production galleries (lead + thumbnails) |
+| `/resume` | Embedded PDF (from Site Settings → Resume PDF) + download button |
+| `/contact` | Contact form (Web3Forms) + whatever contact fields are filled in |
 | `/studio` | Sanity Studio — Eddy's editing UI |
 
-`/resume/acting` + `/resume/directing` redirect to `/resume`; `/gallery` → `/gallery/acting`.
-The acting/directing resumes remain **separate CMS documents** — the page merges them, so a
-future "PDF-only resume page" change is a page-level swap with no schema migration.
+Old routes (`/media`, `/gallery/*`, `/resume/acting|directing`) redirect to their successors.
+
+**Blank-means-hidden:** with the CMS connected, every empty field/document simply hides its
+element — no seed placeholders leak into production. The seed JSON in `/content` is used only
+when `NEXT_PUBLIC_SANITY_PROJECT_ID` is unset (local demo mode). The only fallback in CMS mode
+is the site name (so `<title>`/wordmark never render blank).
+
+The shared `GalleryViewer` component (lead photo + clickable thumbnail strip) powers both the
+acting galleries and the directing production galleries.
 
 ## Content architecture
 
 **Every word, photo, and video on the site flows through `src/lib/content.ts`.** It has two modes:
 
-1. **Seed mode (current):** serves the JSON files in `/content` (`site.json`, `bio.json`,
-   `resume.json` — `acting` + `directing` keys, `photos.json`, `projects.json`, `videos.json`).
-   Edit those files to change the site.
-2. **CMS mode:** when `NEXT_PUBLIC_SANITY_PROJECT_ID` is set, it fetches the same shapes from
-   Sanity (60s ISR revalidate), falling back per-document to the seed JSON until Eddy has created
-   each document in the studio. The Sanity schemas (`sanity/schemas/`) mirror the JSON 1:1.
+1. **Seed mode:** serves the JSON files in `/content` (`site.json`, `bio.json`, `actor.json`,
+   `director.json`, `galleries.json`, `projects.json`, `videos.json`). Demo/local only.
+2. **CMS mode:** when `NEXT_PUBLIC_SANITY_PROJECT_ID` is set, everything comes from Sanity
+   (60s ISR revalidate) and blank means hidden — no seed fallbacks except the site name. The
+   Sanity schemas (`sanity/schemas/`) mirror the JSON shapes.
 
 Placeholder assets to replace with real ones: SVGs in `public/images/`, the placeholder PDF at
 `public/resume/eddy-lukovic-resume.pdf`, and all names/credits in `/content` (invented seed copy).
@@ -55,9 +55,8 @@ Placeholder assets to replace with real ones: SVGs in `public/images/`, the plac
 3. In the project's **API → CORS origins**, add `http://localhost:3000` and the production domain
    (with credentials allowed) so the embedded studio at `/studio` can talk to the API.
 4. Invite Eddy as a member (role: Editor) so he can log into `/studio` with just his email.
-5. Open `/studio`, create the four singletons (Site Settings, Bio, Acting Resume, Directing
-   Resume) and add Acting Gallery Photos / Directing Projects / Videos. Anything he doesn't fill
-   in falls back to the seed JSON, so the site never breaks mid-migration.
+5. Open `/studio`, fill the four singletons (Site Settings, Bio, Actor Page, Director Page)
+   and add Acting Galleries / Directing Projects / Videos. Blank fields hide their elements.
 
 Published edits appear on the live site within ~60 seconds (ISR revalidate).
 

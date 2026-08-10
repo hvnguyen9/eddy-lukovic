@@ -16,12 +16,16 @@ const archivo = Archivo({
 
 export async function generateMetadata(): Promise<Metadata> {
   const site = await getSite();
+  const title = [site.name, site.tagline].filter(Boolean).join(" — ");
+  const who = [site.tagline || "actor and director", site.location && `based in ${site.location}`]
+    .filter(Boolean)
+    .join(", ");
   return {
     title: {
-      default: `${site.name} — ${site.tagline}`,
+      default: title,
       template: `%s — ${site.name}`,
     },
-    description: `${site.name} is an actor based in ${site.location}. Reel, resume, photos, and contact.`,
+    description: `${site.name}, ${who}. Reel, resume, photos, and contact.`,
   };
 }
 

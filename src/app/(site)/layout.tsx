@@ -1,4 +1,3 @@
-import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 
 export default function SiteLayout({
@@ -8,7 +7,6 @@ export default function SiteLayout({
     <>
       <SiteHeader />
       <main>{children}</main>
-      <SiteFooter />
     </>
   );
 }

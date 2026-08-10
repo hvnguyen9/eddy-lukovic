@@ -17,8 +17,9 @@ the text to hide it; fill it in to bring it back.
 
 1. **Site Settings** — your name, the tagline (the small line ABOVE your name on the
    homepage), location, email, phone, the homepage buttons (e.g. "Watch the reel"), social
-   links, representation, and your **resume PDF** — the Resume page displays and offers a
-   download of exactly the file you upload here.
+   links, representation, and your **resume PDF** — the "Resume" link in the menu opens
+   exactly the file you upload here, in a new tab (viewers can save or print it from there).
+   Remove the file and the Resume link disappears from the menu entirely.
 
 2. **Bio** — the sentence BELOW your name on the homepage ("Short bio"), the full paragraphs
    and pull quote on the About page, your homepage headshot, the About page main photo, and

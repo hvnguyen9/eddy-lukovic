@@ -20,7 +20,7 @@ font swaps are one-file changes.
 | `/about` | Bio paragraphs + pull quote; main photo with a candid-photo montage beneath |
 | `/actor` | Main image + intro, Videos band (embeds), labeled photo galleries (lead + thumbnails) |
 | `/director` | Edge-to-edge lead image, artistic statement, production galleries (lead + thumbnails) |
-| `/resume` | Embedded PDF (from Site Settings → Resume PDF) + download button |
+| `/resume` | Redirects straight to the uploaded PDF (Site Settings → Resume PDF); opens in a new tab from the nav. The Resume link hides site-wide when no PDF is uploaded |
 | `/contact` | Contact form (Web3Forms) + whatever contact fields are filled in |
 | `/studio` | Sanity Studio — Eddy's editing UI |
 

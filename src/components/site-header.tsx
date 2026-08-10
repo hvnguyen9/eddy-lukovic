@@ -4,17 +4,19 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
-const links = [
-  { href: "/about", label: "About" },
-  { href: "/actor", label: "Actor" },
-  { href: "/director", label: "Director" },
-  { href: "/resume", label: "Resume" },
-  { href: "/contact", label: "Contact" },
-];
-
-export function SiteHeader() {
+// The Resume entry opens the uploaded PDF directly (via the /resume redirect)
+// in a new tab, and is hidden entirely when no PDF has been uploaded.
+export function SiteHeader({ showResume }: { showResume: boolean }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+
+  const links: { href: string; label: string; external?: boolean }[] = [
+    { href: "/about", label: "About" },
+    { href: "/actor", label: "Actor" },
+    { href: "/director", label: "Director" },
+    ...(showResume ? [{ href: "/resume", label: "Resume", external: true }] : []),
+    { href: "/contact", label: "Contact" },
+  ];
 
   return (
     <header className="sticky top-0 z-50 border-b border-line bg-bone/90 backdrop-blur-sm">
@@ -33,16 +35,28 @@ export function SiteHeader() {
         </Link>
 
         <nav className="hidden items-center gap-8 sm:flex">
-          {links.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              data-active={pathname === link.href}
-              className="nav-link text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-ink-soft hover:text-ink data-[active=true]:text-ink"
-            >
-              {link.label}
-            </Link>
-          ))}
+          {links.map((link) =>
+            link.external ? (
+              <a
+                key={link.href}
+                href={link.href}
+                target="_blank"
+                rel="noreferrer"
+                className="nav-link text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-ink-soft hover:text-ink"
+              >
+                {link.label}
+              </a>
+            ) : (
+              <Link
+                key={link.href}
+                href={link.href}
+                data-active={pathname === link.href}
+                className="nav-link text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-ink-soft hover:text-ink data-[active=true]:text-ink"
+              >
+                {link.label}
+              </Link>
+            )
+          )}
         </nav>
 
         <button
@@ -66,13 +80,25 @@ export function SiteHeader() {
           <ul className="flex flex-col gap-5">
             {links.map((link) => (
               <li key={link.href}>
-                <Link
-                  href={link.href}
-                  onClick={() => setOpen(false)}
-                  className="display text-2xl italic"
-                >
-                  {link.label}
-                </Link>
+                {link.external ? (
+                  <a
+                    href={link.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={() => setOpen(false)}
+                    className="display text-2xl italic"
+                  >
+                    {link.label}
+                  </a>
+                ) : (
+                  <Link
+                    href={link.href}
+                    onClick={() => setOpen(false)}
+                    className="display text-2xl italic"
+                  >
+                    {link.label}
+                  </Link>
+                )}
               </li>
             ))}
           </ul>

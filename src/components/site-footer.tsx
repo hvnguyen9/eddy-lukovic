@@ -63,7 +63,13 @@ export async function SiteFooter() {
               <li><Link href="/about" className="text-bone/90 hover:text-oxblood-bright">About</Link></li>
               <li><Link href="/actor" className="text-bone/90 hover:text-oxblood-bright">Actor</Link></li>
               <li><Link href="/director" className="text-bone/90 hover:text-oxblood-bright">Director</Link></li>
-              <li><Link href="/resume" className="text-bone/90 hover:text-oxblood-bright">Resume</Link></li>
+              {site.resumePdfUrl && (
+                <li>
+                  <a href="/resume" target="_blank" rel="noreferrer" className="text-bone/90 hover:text-oxblood-bright">
+                    Resume
+                  </a>
+                </li>
+              )}
               <li><Link href="/contact" className="text-bone/90 hover:text-oxblood-bright">Contact</Link></li>
             </ul>
           </div>

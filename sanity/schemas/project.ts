@@ -52,5 +52,12 @@ export const project = defineType({
   orderings: [
     { title: "Sort order", name: "orderAsc", by: [{ field: "order", direction: "asc" }] },
   ],
-  preview: { select: { title: "title", subtitle: "year", media: "cover" } },
+  preview: {
+    select: { title: "title", year: "year", order: "order", media: "cover" },
+    prepare: ({ title, year, order, media }) => ({
+      title,
+      subtitle: `${year ?? ""} · Sort order: ${order ?? "—"}`,
+      media,
+    }),
+  },
 });

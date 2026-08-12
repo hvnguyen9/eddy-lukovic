@@ -40,6 +40,11 @@ export const actingGallery = defineType({
     { title: "Sort order", name: "orderAsc", by: [{ field: "order", direction: "asc" }] },
   ],
   preview: {
-    select: { title: "title", media: "photos.0" },
+    select: { title: "title", order: "order", media: "photos.0" },
+    prepare: ({ title, order, media }) => ({
+      title,
+      subtitle: `Sort order: ${order ?? "—"}`,
+      media,
+    }),
   },
 });

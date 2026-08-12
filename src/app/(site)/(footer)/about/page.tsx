@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { CandidGrid } from "@/components/candid-grid";
 import { getBio, getSite } from "@/lib/content";
 
 export const metadata: Metadata = { title: "About" };
@@ -9,10 +10,10 @@ export default async function AboutPage() {
   const [bio, site] = await Promise.all([getBio(), getSite()]);
 
   return (
-    <section className="mx-auto grid max-w-6xl gap-14 px-6 pt-16 pb-24 md:grid-cols-[0.8fr_1.2fr] md:pt-24">
+    <section className="mx-auto grid max-w-6xl gap-14 px-6 pt-16 pb-24 md:grid-cols-[0.9fr_1.1fr] md:pt-24">
       <div>
         {bio.secondaryPhoto && (
-          <div className="frame mx-auto w-full max-w-xs md:mx-0">
+          <div className="frame mx-auto w-full max-w-sm md:mx-0">
             <Image
               src={bio.secondaryPhoto.src}
               alt={bio.secondaryPhoto.alt}
@@ -24,22 +25,8 @@ export default async function AboutPage() {
           </div>
         )}
 
-        {/* Candid montage under the main photo */}
-        {bio.candids.length > 0 && (
-          <div className="mt-8 grid max-w-xs grid-cols-3 gap-3 md:max-w-none md:grid-cols-3 mx-auto md:mx-0">
-            {bio.candids.map((photo) => (
-              <div key={photo.src} className="relative aspect-square overflow-hidden bg-bone-deep">
-                <Image
-                  src={photo.src}
-                  alt={photo.alt}
-                  fill
-                  sizes="160px"
-                  className="object-cover"
-                />
-              </div>
-            ))}
-          </div>
-        )}
+        {/* Candid montage — click any photo for full size */}
+        <CandidGrid photos={bio.candids} />
       </div>
 
       <div>
@@ -52,7 +39,9 @@ export default async function AboutPage() {
         {bio.paragraphs.length > 0 && (
           <div className="mt-10 max-w-xl space-y-6 text-lg leading-relaxed text-ink-soft">
             {bio.paragraphs.map((paragraph) => (
-              <p key={paragraph.slice(0, 32)}>{paragraph}</p>
+              <p key={paragraph.slice(0, 32)} className="whitespace-pre-line">
+                {paragraph}
+              </p>
             ))}
           </div>
         )}

@@ -13,6 +13,7 @@ const singletons = [
   { type: "bio", title: "Bio" },
   { type: "actorPage", title: "Actor Page" },
   { type: "directorPage", title: "Director Page" },
+  { type: "contactPage", title: "Contact Page" },
 ];
 
 const structure = (S: StructureBuilder) =>
@@ -26,9 +27,31 @@ const structure = (S: StructureBuilder) =>
           .child(S.document().schemaType(s.type).documentId(s.type))
       ),
       S.divider(),
-      S.documentTypeListItem("actingGallery").title("Acting Galleries"),
-      S.documentTypeListItem("project").title("Directing Projects"),
-      S.documentTypeListItem("video").title("Videos"),
+      // Lists open sorted the same way the site sorts them (Sort order field)
+      S.listItem()
+        .title("Acting Galleries")
+        .id("actingGalleries")
+        .child(
+          S.documentTypeList("actingGallery")
+            .title("Acting Galleries")
+            .defaultOrdering([{ field: "order", direction: "asc" }])
+        ),
+      S.listItem()
+        .title("Directing Projects")
+        .id("directingProjects")
+        .child(
+          S.documentTypeList("project")
+            .title("Directing Projects")
+            .defaultOrdering([{ field: "order", direction: "asc" }])
+        ),
+      S.listItem()
+        .title("Videos")
+        .id("videos")
+        .child(
+          S.documentTypeList("video")
+            .title("Videos")
+            .defaultOrdering([{ field: "order", direction: "asc" }])
+        ),
     ]);
 
 export default defineConfig({

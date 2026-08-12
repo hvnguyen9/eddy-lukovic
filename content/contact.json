@@ -1,0 +1,10 @@
+{
+  "heading": "Casting? Booking? Say hello.",
+  "formLabel": "Send a message",
+  "nameLabel": "Name",
+  "emailLabel": "Email",
+  "messageLabel": "Message",
+  "buttonText": "Send message",
+  "successTitle": "Message sent.",
+  "successText": "Thanks for reaching out — you'll hear back soon."
+}

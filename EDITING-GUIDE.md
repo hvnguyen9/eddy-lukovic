@@ -13,7 +13,7 @@ Second rule: **blank means hidden.** Any field you leave empty (a tagline, a pho
 homepage button, your representation) simply disappears from the site — nothing breaks. Delete
 the text to hide it; fill it in to bring it back.
 
-## The seven things you can edit
+## The eight things you can edit
 
 1. **Site Settings** — your name, the tagline (the small line ABOVE your name on the
    homepage), location, email, phone, the homepage buttons (e.g. "Watch the reel"), social
@@ -26,25 +26,38 @@ the text to hide it; fill it in to bring it back.
    delivering to your inbox within a minute.
 
 2. **Bio** — the sentence BELOW your name on the homepage ("Short bio"), the full paragraphs
-   and pull quote on the About page, your homepage headshot, the About page main photo, and
-   the **candid photos** — the little montage of small photos under the main About photo.
+   and pull quote on the About page (press Enter inside a paragraph for a line break, or add
+   a new paragraph item for a full break), your homepage headshot, the About page main photo,
+   and the **candid photos** — the montage of small photos under the main About photo
+   (visitors can click them to see full size).
 
-3. **Actor Page** — the main image and intro paragraph at the top of the Actor page.
+3. **Actor Page** — the page headline, the main image plus up to two extra images (shown as
+   thumbnails under it — visitors can click any image to see it full size), and the intro
+   paragraph.
 
-4. **Director Page** — the wide lead image across the top of the Director page and your
-   artistic statement (~5 sentences).
+4. **Director Page** — the page headline, the wide lead image across the top (use the crop
+   tool and drag the hotspot circle onto the focal point — the site shows a wide cinematic
+   slice and keeps that point in view), and your artistic statement.
 
 5. **Acting Galleries** — labeled photo galleries on the Actor page (e.g. "Headshots",
    "Production Stills"). Create one gallery per label, then add photos inside it — the first
-   photo is the big lead image, the rest appear as clickable thumbnails underneath. Drag
-   photos to reorder.
+   photo is the lead image, the rest appear as thumbnails, and visitors can flip through with
+   arrows or click for full size. **To reorder the galleries on the page**, change each
+   gallery's **Sort order** number — lower numbers show first (e.g. Headshots 10,
+   Stills 20).
 
 6. **Directing Projects** — one per production, shown as galleries on the Director page.
    Title, year, venue, your role, a short description, a cover photo (the lead image), the
-   photo gallery (thumbnails under the lead), and optionally a YouTube/Vimeo link.
+   photo gallery (thumbnails under the lead), and optionally a YouTube/Vimeo link. Reorder
+   with the same **Sort order** number.
 
-7. **Videos** — the clips on the Actor page. Paste a normal YouTube or Vimeo link — the site
-   turns it into a player automatically.
+7. **Contact Page** — every bit of text on the Contact page: the headline, the label above
+   the form, the Name/Email/Message field labels, the send button, and the thank-you message
+   shown after sending. (The email address, phone, socials, and representation shown beside
+   the form come from Site Settings.)
+
+8. **Videos** — the clips on the Actor page. Paste a normal YouTube or Vimeo link — the site
+   turns it into a player automatically. Reorder with the **Sort order** number.
 
 ## Tips
 

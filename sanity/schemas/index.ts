@@ -1,6 +1,7 @@
 import { actingGallery } from "./acting-gallery";
 import { actorPage } from "./actor-page";
 import { bio } from "./bio";
+import { contactPage } from "./contact-page";
 import { directorPage } from "./director-page";
 import { project } from "./project";
 import { siteSettings } from "./site-settings";
@@ -11,6 +12,7 @@ export const schemaTypes = [
   bio,
   actorPage,
   directorPage,
+  contactPage,
   actingGallery,
   project,
   video,

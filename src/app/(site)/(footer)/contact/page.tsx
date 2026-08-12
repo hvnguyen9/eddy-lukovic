@@ -1,27 +1,42 @@
 import type { Metadata } from "next";
+import { AccentHeading } from "@/components/accent-heading";
 import { ContactForm } from "@/components/contact-form";
-import { getSite } from "@/lib/content";
+import { getContactPage, getSite } from "@/lib/content";
 
 export const metadata: Metadata = { title: "Contact" };
 
 export default async function ContactPage() {
-  const site = await getSite();
+  const [site, page] = await Promise.all([getSite(), getContactPage()]);
   const hasRepresentation = Boolean(site.representation.name || site.representation.contact);
 
   return (
-    <section className="mx-auto max-w-6xl px-6 pt-16 pb-28 md:pt-24">
+    <section className="mx-auto max-w-6xl px-6 pt-16 pb-24 md:pt-24">
       <p className="eyebrow">Contact</p>
-      <h1 className="display mt-6 max-w-3xl text-5xl leading-tight font-medium sm:text-7xl">
-        Casting? Booking? <em className="text-oxblood">Say hello.</em>
-      </h1>
+      <AccentHeading
+        text={page.heading}
+        className="display mt-6 max-w-3xl text-5xl leading-tight font-medium sm:text-7xl"
+      />
 
-      <div className="mt-16 grid gap-14 border-t border-line pt-12 md:grid-cols-[1.1fr_0.9fr] md:gap-20">
+      <div className="mt-14 grid gap-14 border-t border-line pt-12 md:grid-cols-[1.1fr_0.9fr] md:gap-20">
         <div>
-          <p className="text-[0.7rem] font-semibold tracking-[0.22em] text-muted uppercase">
-            Send a message
-          </p>
+          {page.formLabel && (
+            <p className="text-[0.7rem] font-semibold tracking-[0.22em] text-muted uppercase">
+              {page.formLabel}
+            </p>
+          )}
           <div className="mt-6">
-            <ContactForm fallbackEmail={site.email} accessKey={site.contactFormKey} />
+            <ContactForm
+              fallbackEmail={site.email}
+              accessKey={site.contactFormKey}
+              text={{
+                nameLabel: page.nameLabel,
+                emailLabel: page.emailLabel,
+                messageLabel: page.messageLabel,
+                buttonText: page.buttonText,
+                successTitle: page.successTitle,
+                successText: page.successText,
+              }}
+            />
           </div>
         </div>
 

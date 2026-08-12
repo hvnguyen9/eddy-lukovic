@@ -16,12 +16,23 @@ const labelClass =
 const inputClass =
   "mt-2 w-full border border-line bg-transparent px-4 py-3 text-base outline-none transition-colors placeholder:text-muted/60 focus:border-oxblood";
 
+export interface ContactFormText {
+  nameLabel: string;
+  emailLabel: string;
+  messageLabel: string;
+  buttonText: string;
+  successTitle: string;
+  successText: string;
+}
+
 export function ContactForm({
   fallbackEmail,
   accessKey,
+  text,
 }: {
   fallbackEmail: string;
   accessKey?: string;
+  text: ContactFormText;
 }) {
   const [status, setStatus] = useState<Status>("idle");
   const key = accessKey || ENV_ACCESS_KEY;
@@ -68,10 +79,8 @@ export function ContactForm({
   if (status === "success") {
     return (
       <div className="border border-line bg-bone-deep p-8">
-        <p className="display text-2xl italic">Message sent.</p>
-        <p className="mt-3 text-sm leading-relaxed text-ink-soft">
-          Thanks for reaching out — you&rsquo;ll hear back soon.
-        </p>
+        <p className="display text-2xl italic">{text.successTitle}</p>
+        <p className="mt-3 text-sm leading-relaxed text-ink-soft">{text.successText}</p>
       </div>
     );
   }
@@ -90,7 +99,7 @@ export function ContactForm({
 
       <div>
         <label htmlFor="contact-name" className={labelClass}>
-          Name
+          {text.nameLabel}
         </label>
         <input
           id="contact-name"
@@ -105,7 +114,7 @@ export function ContactForm({
 
       <div>
         <label htmlFor="contact-email" className={labelClass}>
-          Email
+          {text.emailLabel}
         </label>
         <input
           id="contact-email"
@@ -120,7 +129,7 @@ export function ContactForm({
 
       <div>
         <label htmlFor="contact-message" className={labelClass}>
-          Message
+          {text.messageLabel}
         </label>
         <textarea
           id="contact-message"
@@ -137,7 +146,7 @@ export function ContactForm({
         disabled={status === "sending"}
         className="bg-ink px-8 py-3.5 text-[0.72rem] font-semibold tracking-[0.2em] text-bone uppercase transition-colors hover:bg-oxblood disabled:opacity-60"
       >
-        {status === "sending" ? "Sending…" : "Send message"}
+        {status === "sending" ? "Sending…" : text.buttonText}
       </button>
 
       {status === "error" && (

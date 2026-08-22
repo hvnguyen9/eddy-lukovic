@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { AccentHeading } from "@/components/accent-heading";
 import { GalleryViewer } from "@/components/gallery-viewer";
+import { ImageQuote } from "@/components/image-quote";
+import { SectionHeading } from "@/components/section-heading";
 import { getDirectorPage, getProjects, toEmbedUrl } from "@/lib/content";
 
 export const metadata: Metadata = { title: "Director" };
@@ -11,7 +13,7 @@ export default async function DirectorPage() {
 
   return (
     <>
-      {/* Lead photo — edge to edge, crop/hotspot from the studio applied */}
+      {/* Lead photo — edge to edge, with an optional review quote over it */}
       {page.leadImage && (
         <div className="relative aspect-[21/9] w-full overflow-hidden bg-night">
           <Image
@@ -22,11 +24,12 @@ export default async function DirectorPage() {
             sizes="100vw"
             className="object-cover"
           />
+          {page.quote && <ImageQuote quote={page.quote} />}
         </div>
       )}
 
       {/* Artistic statement */}
-      <section className="mx-auto max-w-6xl px-6 pt-12 pb-12 md:pt-16">
+      <section className="mx-auto max-w-6xl px-6 pt-10 pb-10 md:pt-14">
         <p className="eyebrow">Director</p>
         <AccentHeading text={page.heading} />
         {page.statement && (
@@ -38,11 +41,8 @@ export default async function DirectorPage() {
 
       {/* Production galleries — lead photo + thumbnails per production */}
       {projects.length > 0 && (
-        <section className="mx-auto max-w-6xl px-6 pb-16">
-          <h2 className="flex items-baseline gap-4 text-[0.72rem] font-semibold tracking-[0.25em] text-oxblood uppercase">
-            Productions
-            <span className="h-px flex-1 bg-line" aria-hidden />
-          </h2>
+        <section className="mx-auto max-w-6xl px-6 pb-14">
+          <SectionHeading text={page.productionsHeading} />
           <div className="mt-8 grid gap-x-10 gap-y-10 md:grid-cols-2">
             {projects.map((project) => {
               // Cover leads the gallery; skip it if it's repeated in images.
@@ -69,8 +69,8 @@ export default async function DirectorPage() {
                       {[project.role, project.company].filter(Boolean).join(" · ")}
                     </p>
                   )}
-                  <div className="mt-4">
-                    <GalleryViewer photos={photos} ratio="aspect-[3/2]" />
+                  <div className="mt-3">
+                    <GalleryViewer photos={photos} ratio="aspect-[3/2]" thumbCols={6} />
                   </div>
                   {project.description && (
                     <p className="mt-4 max-w-prose text-sm leading-relaxed whitespace-pre-line text-ink-soft">

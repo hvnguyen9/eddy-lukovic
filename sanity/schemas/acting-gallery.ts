@@ -2,9 +2,10 @@ import { defineField, defineType } from "sanity";
 
 export const actingGallery = defineType({
   name: "actingGallery",
-  title: "Acting Gallery",
+  title: "Photo Gallery",
   type: "document",
-  description: 'A labeled photo gallery on the Actor page (e.g. "Headshots", "Production Stills"). The first photo is the lead; the rest appear as thumbnails.',
+  description:
+    'A labeled photo gallery (e.g. "Headshots", or a production name). Set the order they appear in on the Actor Page, under "Photo galleries".',
   fields: [
     defineField({
       name: "title",
@@ -16,7 +17,8 @@ export const actingGallery = defineType({
       name: "photos",
       title: "Photos",
       type: "array",
-      description: "Drag to reorder — the first photo is the gallery's lead image. Remember to hit Publish after adding photos!",
+      description:
+        "Drag to reorder — the first photo is the gallery's lead image. Remember to hit Publish after adding photos!",
       of: [
         {
           type: "image",
@@ -28,22 +30,12 @@ export const actingGallery = defineType({
         },
       ],
     }),
-    defineField({
-      name: "order",
-      title: "Sort order",
-      type: "number",
-      description: "Lower numbers show first.",
-      initialValue: 100,
-    }),
-  ],
-  orderings: [
-    { title: "Sort order", name: "orderAsc", by: [{ field: "order", direction: "asc" }] },
   ],
   preview: {
-    select: { title: "title", order: "order", media: "photos.0" },
-    prepare: ({ title, order, media }) => ({
+    select: { title: "title", photos: "photos", media: "photos.0" },
+    prepare: ({ title, photos, media }) => ({
       title,
-      subtitle: `Sort order: ${order ?? "—"}`,
+      subtitle: `${photos?.length ?? 0} photo${photos?.length === 1 ? "" : "s"}`,
       media,
     }),
   },

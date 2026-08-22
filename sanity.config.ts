@@ -6,52 +6,63 @@ import { visionTool } from "@sanity/vision";
 import { apiVersion, dataset, projectId } from "./sanity/env";
 import { schemaTypes } from "./sanity/schemas";
 
-// Singletons: one fixed document each, so Eddy can't accidentally create
-// duplicates of Site Settings / Bio / Resume.
+// One entry per page of the website, in menu order. Repeatable content
+// (galleries, productions, videos) is nested under the page it belongs to;
+// the order those appear in is set on the page document itself.
 const singletons = [
-  { type: "siteSettings", title: "Site Settings" },
-  { type: "bio", title: "Bio" },
+  { type: "siteSettings", title: "Home Page" },
+  { type: "bio", title: "About" },
   { type: "actorPage", title: "Actor Page" },
   { type: "directorPage", title: "Director Page" },
+  { type: "resumePage", title: "Resume Page" },
   { type: "contactPage", title: "Contact Page" },
+  { type: "footerSettings", title: "Footer" },
 ];
+
+const singletonItem = (S: StructureBuilder, type: string, title: string) =>
+  S.listItem()
+    .title(title)
+    .id(type)
+    .child(S.document().schemaType(type).documentId(type).title(title));
 
 const structure = (S: StructureBuilder) =>
   S.list()
-    .title("Content")
+    .title("Website")
     .items([
-      ...singletons.map((s) =>
-        S.listItem()
-          .title(s.title)
-          .id(s.type)
-          .child(S.document().schemaType(s.type).documentId(s.type))
-      ),
+      singletonItem(S, "siteSettings", "Home Page"),
+      singletonItem(S, "bio", "About"),
+
+      // Actor page + the galleries and videos it shows
+      S.listItem()
+        .title("Actor Page")
+        .id("actorGroup")
+        .child(
+          S.list()
+            .title("Actor Page")
+            .items([
+              singletonItem(S, "actorPage", "Page content"),
+              S.documentTypeListItem("actingGallery").title("Photo Galleries"),
+              S.documentTypeListItem("video").title("Videos"),
+            ])
+        ),
+
+      // Director page + the productions it shows
+      S.listItem()
+        .title("Director Page")
+        .id("directorGroup")
+        .child(
+          S.list()
+            .title("Director Page")
+            .items([
+              singletonItem(S, "directorPage", "Page content"),
+              S.documentTypeListItem("project").title("Productions"),
+            ])
+        ),
+
+      singletonItem(S, "resumePage", "Resume Page"),
+      singletonItem(S, "contactPage", "Contact Page"),
       S.divider(),
-      // Lists open sorted the same way the site sorts them (Sort order field)
-      S.listItem()
-        .title("Acting Galleries")
-        .id("actingGalleries")
-        .child(
-          S.documentTypeList("actingGallery")
-            .title("Acting Galleries")
-            .defaultOrdering([{ field: "order", direction: "asc" }])
-        ),
-      S.listItem()
-        .title("Directing Projects")
-        .id("directingProjects")
-        .child(
-          S.documentTypeList("project")
-            .title("Directing Projects")
-            .defaultOrdering([{ field: "order", direction: "asc" }])
-        ),
-      S.listItem()
-        .title("Videos")
-        .id("videos")
-        .child(
-          S.documentTypeList("video")
-            .title("Videos")
-            .defaultOrdering([{ field: "order", direction: "asc" }])
-        ),
+      singletonItem(S, "footerSettings", "Footer"),
     ]);
 
 export default defineConfig({
@@ -60,7 +71,19 @@ export default defineConfig({
   basePath: "/studio",
   projectId,
   dataset,
-  schema: { types: schemaTypes },
+  schema: {
+    types: schemaTypes,
+    // Singletons are opened from the list, never created from "＋ Create"
+    templates: (prev) =>
+      prev.filter((t) => !singletons.some((s) => s.type === t.schemaType)),
+  },
+  document: {
+    // No duplicating or deleting the one-per-site page documents
+    actions: (prev, { schemaType }) =>
+      singletons.some((s) => s.type === schemaType)
+        ? prev.filter(({ action }) => action !== "duplicate" && action !== "delete")
+        : prev,
+  },
   plugins: [
     structureTool({ structure }),
     // Vision is a developer query console — keep it out of Eddy's studio.

@@ -5,6 +5,12 @@ import { useState } from "react";
 import { Lightbox } from "@/components/lightbox";
 import type { CaptionedImage } from "@/lib/content";
 
+const THUMB_GRID = {
+  3: "grid-cols-3",
+  4: "grid-cols-4",
+  6: "grid-cols-3 sm:grid-cols-6",
+} as const;
+
 // Lead photo with arrows and a strip of small thumbnails beneath it. The main
 // image is letterboxed (never cropped); clicking it opens the full-size
 // lightbox. Used for acting galleries, directing production galleries, and
@@ -12,9 +18,12 @@ import type { CaptionedImage } from "@/lib/content";
 export function GalleryViewer({
   photos,
   ratio = "aspect-[3/2]",
+  thumbCols = 3,
 }: {
   photos: CaptionedImage[];
   ratio?: string;
+  // How many thumbnails fit per row under the lead image.
+  thumbCols?: 3 | 4 | 6;
 }) {
   const [index, setIndex] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -79,7 +88,7 @@ export function GalleryViewer({
       ) : null}
 
       {photos.length > 1 && (
-        <div className="mt-3 flex flex-wrap gap-2">
+        <div className={`mt-3 grid gap-2 ${THUMB_GRID[thumbCols]}`}>
           {photos.map((photo, i) => (
             <button
               key={photo.src + i}
@@ -87,13 +96,13 @@ export function GalleryViewer({
               onClick={() => setIndex(i)}
               aria-label={`Show photo ${i + 1}${photo.caption ? ` — ${photo.caption}` : ""}`}
               aria-current={i === safeIndex}
-              className={`relative h-16 w-24 overflow-hidden transition-opacity ${
+              className={`relative aspect-[3/2] overflow-hidden transition-opacity ${
                 i === safeIndex
-                  ? "opacity-100 outline-2 outline-offset-2 outline-oxblood"
+                  ? "opacity-100 outline-2 -outline-offset-2 outline-oxblood"
                   : "opacity-55 hover:opacity-100"
               }`}
             >
-              <Image src={photo.src} alt="" fill sizes="96px" className="object-cover" />
+              <Image src={photo.src} alt="" fill sizes="160px" className="object-cover" />
             </button>
           ))}
         </div>

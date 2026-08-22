@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { AccentHeading } from "@/components/accent-heading";
 import { GalleryViewer } from "@/components/gallery-viewer";
+import { SectionHeading } from "@/components/section-heading";
 import { VideoBlock } from "@/components/video-block";
 import { getActingGalleries, getActorPage, getVideos } from "@/lib/content";
 
@@ -13,19 +14,16 @@ export default async function ActorPage() {
     getActingGalleries(),
   ]);
 
-  // Main image + up to two extras: thumbnails under the lead, all lightboxable
-  const mainImages = [
-    ...(page.image ? [page.image] : []),
-    ...page.extraImages,
-  ];
+  // Main image plus extras: thumbnails under the lead, all click-to-enlarge
+  const mainImages = [...(page.image ? [page.image] : []), ...page.extraImages];
 
   return (
     <>
       {/* Intro — main image(s) + text */}
-      <section className="mx-auto grid max-w-6xl items-start gap-10 px-6 pt-12 pb-12 md:grid-cols-[0.8fr_1.2fr] md:pt-16">
+      <section className="mx-auto grid max-w-6xl items-start gap-10 px-6 pt-10 pb-10 md:grid-cols-[0.8fr_1.2fr] md:pt-14">
         {mainImages.length > 0 && (
-          <div className="mx-auto w-full max-w-xs md:mx-0">
-            <GalleryViewer photos={mainImages} ratio="aspect-[4/5]" />
+          <div className="mx-auto w-full max-w-[22rem] md:mx-0">
+            <GalleryViewer photos={mainImages} ratio="aspect-[4/5]" thumbCols={3} />
           </div>
         )}
         <div>
@@ -43,10 +41,7 @@ export default async function ActorPage() {
       {videos.length > 0 && (
         <section id="videos" className="bg-night text-bone scroll-mt-16">
           <div className="mx-auto max-w-6xl px-6 py-12">
-            <h2 className="flex items-baseline gap-4 text-[0.72rem] font-semibold tracking-[0.25em] text-oxblood-bright uppercase">
-              Videos
-              <span className="h-px flex-1 bg-bone/15" aria-hidden />
-            </h2>
+            <SectionHeading text={page.videosHeading} dark />
             <div className="mt-8 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
               {videos.map((video) => (
                 <VideoBlock key={video.title} video={video} dark />
@@ -59,16 +54,13 @@ export default async function ActorPage() {
       {/* Photos — labeled galleries, lead photo + thumbnails */}
       {galleries.length > 0 && (
         <section className="mx-auto max-w-6xl px-6 py-12">
-          <h2 className="flex items-baseline gap-4 text-[0.72rem] font-semibold tracking-[0.25em] text-oxblood uppercase">
-            Photos
-            <span className="h-px flex-1 bg-line" aria-hidden />
-          </h2>
+          <SectionHeading text={page.photosHeading} />
           <div className="mt-8 grid gap-x-10 gap-y-10 md:grid-cols-2">
             {galleries.map((gallery) => (
               <div key={gallery.title}>
-                <h3 className="display text-2xl italic">{gallery.title}</h3>
-                <div className="mt-4">
-                  <GalleryViewer photos={gallery.photos} ratio="aspect-[4/3]" />
+                {gallery.title && <h3 className="display text-2xl italic">{gallery.title}</h3>}
+                <div className="mt-3">
+                  <GalleryViewer photos={gallery.photos} ratio="aspect-[4/3]" thumbCols={6} />
                 </div>
               </div>
             ))}

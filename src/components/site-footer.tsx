@@ -1,48 +1,62 @@
 import Link from "next/link";
-import { getSite } from "@/lib/content";
+import { getContact, getFooter, getHome, getResumePage } from "@/lib/content";
+
+const SIZE_PADDING = {
+  compact: "py-8",
+  medium: "py-14",
+  tall: "py-24",
+} as const;
 
 export async function SiteFooter() {
-  const site = await getSite();
-  const hasRepresentation = Boolean(site.representation.name || site.representation.contact);
+  const [footer, contact, home, resume] = await Promise.all([
+    getFooter(),
+    getContact(),
+    getHome(),
+    getResumePage(),
+  ]);
+
+  const showEmail = footer.showEmail && Boolean(contact.email);
+  const showSocials = footer.showSocials && contact.socials.length > 0;
 
   return (
     <footer className="bg-night text-bone">
-      <div className="mx-auto max-w-6xl px-6 py-10">
-        <div className="flex flex-wrap items-baseline justify-between gap-x-10 gap-y-4">
-          {site.email && (
-            <a
-              href={`mailto:${site.email}`}
-              className="display text-xl italic underline decoration-oxblood-bright decoration-1 underline-offset-6 transition-colors hover:text-oxblood-bright sm:text-2xl"
-            >
-              {site.email}
-            </a>
-          )}
-          <nav className="flex flex-wrap gap-x-6 gap-y-2 text-[0.7rem] font-semibold uppercase tracking-[0.2em]">
-            <Link href="/about" className="text-bone/70 hover:text-oxblood-bright">About</Link>
-            <Link href="/actor" className="text-bone/70 hover:text-oxblood-bright">Actor</Link>
-            <Link href="/director" className="text-bone/70 hover:text-oxblood-bright">Director</Link>
-            {site.resumePdfUrl && (
-              <a href="/resume" target="_blank" rel="noreferrer" className="text-bone/70 hover:text-oxblood-bright">
-                Resume
+      <div className={`mx-auto max-w-6xl px-6 ${SIZE_PADDING[footer.size] ?? SIZE_PADDING.compact}`}>
+        {(showEmail || footer.showNav) && (
+          <div className="flex flex-wrap items-baseline justify-between gap-x-10 gap-y-4">
+            {showEmail && (
+              <a
+                href={`mailto:${contact.email}`}
+                className="display text-xl italic underline decoration-oxblood-bright decoration-1 underline-offset-6 transition-colors hover:text-oxblood-bright sm:text-2xl"
+              >
+                {contact.email}
               </a>
             )}
-            <Link href="/contact" className="text-bone/70 hover:text-oxblood-bright">Contact</Link>
-          </nav>
-        </div>
-
-        <div className="mt-6 flex flex-wrap items-baseline justify-between gap-x-10 gap-y-3 border-t border-bone/15 pt-5 text-xs text-bone/50">
-          <p>
-            © {new Date().getFullYear()} {site.name}.{site.location ? ` ${site.location}.` : ""}
-            {hasRepresentation && (
-              <span>
-                {" "}{site.representation.label}:{" "}
-                {[site.representation.name, site.representation.contact].filter(Boolean).join(" · ")}
-              </span>
+            {footer.showNav && (
+              <nav className="flex flex-wrap gap-x-6 gap-y-2 text-[0.7rem] font-semibold uppercase tracking-[0.2em]">
+                <Link href="/about" className="text-bone/70 hover:text-oxblood-bright">About</Link>
+                <Link href="/actor" className="text-bone/70 hover:text-oxblood-bright">Actor</Link>
+                <Link href="/director" className="text-bone/70 hover:text-oxblood-bright">Director</Link>
+                {resume.resumes.length > 0 && (
+                  <Link href="/resume" className="text-bone/70 hover:text-oxblood-bright">Resume</Link>
+                )}
+                <Link href="/contact" className="text-bone/70 hover:text-oxblood-bright">Contact</Link>
+              </nav>
             )}
+          </div>
+        )}
+
+        <div
+          className={`flex flex-wrap items-baseline justify-between gap-x-10 gap-y-3 text-xs text-bone/50 ${
+            showEmail || footer.showNav ? "mt-6 border-t border-bone/15 pt-5" : ""
+          }`}
+        >
+          <p>
+            © {new Date().getFullYear()} {home.name}.{home.location ? ` ${home.location}.` : ""}
+            {footer.customText ? ` ${footer.customText}` : ""}
           </p>
-          {site.socials.length > 0 && (
+          {showSocials && (
             <span className="flex flex-wrap gap-x-5 gap-y-2">
-              {site.socials.map((social) => (
+              {contact.socials.map((social) => (
                 <a
                   key={social.label}
                   href={social.url}

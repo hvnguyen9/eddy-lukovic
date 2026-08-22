@@ -1,0 +1,14 @@
+{
+  "firstName": "Eddy",
+  "lastName": "Lukovic",
+  "name": "Eddy Lukovic",
+  "tagline": "Actor & Director",
+  "location": "San Diego, CA",
+  "shortBio": "Actor, director, movement practitioner, storyteller",
+  "headshot": { "src": "/images/headshot-primary.svg", "alt": "Eddy Lukovic — headshot" },
+  "heroLinks": [
+    { "label": "Actor", "url": "/actor" },
+    { "label": "Director", "url": "/director" },
+    { "label": "View resume", "url": "/resume" }
+  ]
+}

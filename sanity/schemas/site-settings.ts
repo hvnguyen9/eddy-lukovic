@@ -1,39 +1,59 @@
 import { defineField, defineType } from "sanity";
 
+// Document type stays "siteSettings" so existing content is preserved; the
+// studio presents it as "Home Page".
 export const siteSettings = defineType({
   name: "siteSettings",
-  title: "Site Settings",
+  title: "Home Page",
   type: "document",
-  description: "Your name, contact info, links, and resume PDF.",
+  description: "Everything that appears on the home page.",
   fields: [
-    defineField({ name: "firstName", title: "First name", type: "string", validation: (r) => r.required() }),
-    defineField({ name: "lastName", title: "Last name", type: "string", validation: (r) => r.required() }),
+    defineField({
+      name: "firstName",
+      title: "First name",
+      type: "string",
+      description: "Shown large on the home page (also used for the logo and browser tab).",
+      validation: (r) => r.required(),
+    }),
+    defineField({
+      name: "lastName",
+      title: "Last name",
+      type: "string",
+      validation: (r) => r.required(),
+    }),
     defineField({
       name: "tagline",
       title: "Tagline",
       type: "string",
-      description: 'The small line ABOVE your name on the homepage, e.g. "Actor & Director". (The sentence BELOW your name is edited in Bio → "Short bio".)',
+      description: 'The small line ABOVE your name, e.g. "Actor & Director". Leave blank to hide.',
     }),
     defineField({
       name: "location",
       title: "Location",
       type: "string",
-      description: 'Shown next to the tagline, e.g. "New York City". Leave blank to hide.',
+      description: 'Shown next to the tagline, e.g. "San Diego, CA". Leave blank to hide.',
     }),
-    defineField({ name: "email", title: "Email", type: "string", description: "Shown on the Contact page and in the footer. Leave blank to hide." }),
-    defineField({ name: "phone", title: "Phone (optional)", type: "string", description: "Leave blank to hide." }),
     defineField({
-      name: "resumePdf",
-      title: "Resume PDF",
-      type: "file",
-      description: "The Resume page displays and offers a download of this exact file.",
-      options: { accept: ".pdf" },
+      name: "shortBio",
+      title: "Short bio",
+      type: "text",
+      rows: 3,
+      description: "The sentence BELOW your name. Leave blank to hide.",
+    }),
+    defineField({
+      name: "headshot",
+      title: "Home page headshot",
+      type: "image",
+      options: { hotspot: true },
+      description: "The large photo on the home page.",
+      fields: [defineField({ name: "alt", title: "Description (for accessibility)", type: "string" })],
     }),
     defineField({
       name: "heroLinks",
-      title: "Homepage buttons",
+      title: "Home page buttons",
       type: "array",
-      description: 'The buttons under your intro on the homepage (e.g. "Watch the reel" → /actor#videos, "View resume" → /resume). The first is a solid button, the rest are text links. Delete an entry to hide it.',
+      description:
+        'Buttons under your intro. The first is a solid button, the rest are text links. Use /actor, /director, /resume, /about, /contact — or a full https:// link. Delete an entry to hide it.',
       of: [
         {
           type: "object",
@@ -50,38 +70,6 @@ export const siteSettings = defineType({
         },
       ],
     }),
-    defineField({
-      name: "socials",
-      title: "Social links",
-      type: "array",
-      description: "Shown on the Contact page and in the footer. Delete an entry to hide it.",
-      of: [
-        {
-          type: "object",
-          fields: [
-            defineField({ name: "label", title: "Label", type: "string" }),
-            defineField({ name: "url", title: "URL", type: "url" }),
-          ],
-        },
-      ],
-    }),
-    defineField({
-      name: "contactFormKey",
-      title: "Contact form key",
-      type: "string",
-      description:
-        "Powers the Contact page form. Get a free access key at web3forms.com (enter the email that should receive messages — the key arrives instantly). Paste it here and the form goes live within a minute. Leave blank and the form politely asks visitors to email directly instead.",
-    }),
-    defineField({
-      name: "representation",
-      title: "Representation (optional)",
-      type: "object",
-      description: "Agent or manager. Leave both fields blank to hide it everywhere.",
-      fields: [
-        defineField({ name: "name", title: "Agency / manager name", type: "string" }),
-        defineField({ name: "contact", title: "Contact email", type: "string" }),
-      ],
-    }),
   ],
-  preview: { prepare: () => ({ title: "Site Settings" }) },
+  preview: { prepare: () => ({ title: "Home Page" }) },
 });

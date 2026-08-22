@@ -1,15 +1,24 @@
+import { FooterGate } from "@/components/footer-gate";
+import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { getSite } from "@/lib/content";
+import { getFooter, getHome, getResumePage } from "@/lib/content";
 
 export default async function SiteLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const site = await getSite();
+  const [home, footer, resume] = await Promise.all([
+    getHome(),
+    getFooter(),
+    getResumePage(),
+  ]);
 
   return (
     <>
-      <SiteHeader showResume={Boolean(site.resumePdfUrl)} />
+      <SiteHeader name={home.name} showResume={resume.resumes.length > 0} />
       <main>{children}</main>
+      <FooterGate pages={footer.pages}>
+        <SiteFooter />
+      </FooterGate>
     </>
   );
 }

@@ -1,0 +1,21 @@
+{
+  "heading": "Credits & training",
+  "resumes": [
+    {
+      "label": "Theatre",
+      "fileUrl": "/resume/eddy-lukovic-resume.pdf",
+      "fileName": "eddy-lukovic-resume.pdf",
+      "preview": null
+    }
+  ],
+  "upcomingHeading": "Upcoming Projects",
+  "upcoming": [
+    {
+      "title": "Rabbit Hole",
+      "role": "Director",
+      "company": "Trinity Theatre",
+      "dates": "Spring 2027",
+      "note": ""
+    }
+  ]
+}

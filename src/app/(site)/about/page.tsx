@@ -1,22 +1,25 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { AccentHeading } from "@/components/accent-heading";
 import { CandidGrid } from "@/components/candid-grid";
-import { getBio, getSite } from "@/lib/content";
+import { getAbout, getResumePage } from "@/lib/content";
 
 export const metadata: Metadata = { title: "About" };
 
 export default async function AboutPage() {
-  const [bio, site] = await Promise.all([getBio(), getSite()]);
+  const [about, resume] = await Promise.all([getAbout(), getResumePage()]);
 
   return (
-    <section className="mx-auto grid max-w-6xl gap-14 px-6 pt-16 pb-24 md:grid-cols-[0.9fr_1.1fr] md:pt-24">
-      <div>
-        {bio.secondaryPhoto && (
-          <div className="frame mx-auto w-full max-w-sm md:mx-0">
+    <section className="mx-auto grid max-w-6xl gap-12 px-6 pt-10 pb-14 md:grid-cols-[0.9fr_1.1fr] md:pt-14">
+      {/* Main photo + candid montage share one width so three thumbnails
+          line up exactly under the photo. */}
+      <div className="mx-auto w-full max-w-[26.5rem] md:mx-0">
+        {about.mainPhoto && (
+          <div className="frame">
             <Image
-              src={bio.secondaryPhoto.src}
-              alt={bio.secondaryPhoto.alt}
+              src={about.mainPhoto.src}
+              alt={about.mainPhoto.alt}
               width={800}
               height={1000}
               priority
@@ -24,42 +27,34 @@ export default async function AboutPage() {
             />
           </div>
         )}
-
-        {/* Candid montage — click any photo for full size */}
-        <CandidGrid photos={bio.candids} />
+        <CandidGrid photos={about.candids} />
       </div>
 
       <div>
         <p className="eyebrow">About</p>
-        <h1 className="display mt-6 text-5xl leading-tight font-medium sm:text-6xl">
-          The long version,
-          <br />
-          <em className="text-oxblood">kept short.</em>
-        </h1>
-        {bio.paragraphs.length > 0 && (
-          <div className="mt-10 max-w-xl space-y-6 text-lg leading-relaxed text-ink-soft">
-            {bio.paragraphs.map((paragraph) => (
+        <AccentHeading text={about.heading} />
+        {about.paragraphs.length > 0 && (
+          <div className="mt-8 max-w-xl space-y-5 text-lg leading-relaxed text-ink-soft">
+            {about.paragraphs.map((paragraph) => (
               <p key={paragraph.slice(0, 32)} className="whitespace-pre-line">
                 {paragraph}
               </p>
             ))}
           </div>
         )}
-        {bio.pullQuote && (
-          <blockquote className="display mt-12 border-l-2 border-oxblood pl-6 text-2xl leading-snug italic">
-            “{bio.pullQuote}”
+        {about.pullQuote && (
+          <blockquote className="display mt-10 border-l-2 border-oxblood pl-6 text-2xl leading-snug italic">
+            “{about.pullQuote}”
           </blockquote>
         )}
-        <div className="mt-12 flex flex-wrap gap-4">
-          {site.resumePdfUrl && (
-            <a
+        <div className="mt-10 flex flex-wrap gap-4">
+          {resume.resumes.length > 0 && (
+            <Link
               href="/resume"
-              target="_blank"
-              rel="noreferrer"
               className="bg-ink px-7 py-3.5 text-[0.72rem] font-semibold tracking-[0.2em] text-bone uppercase transition-colors hover:bg-oxblood"
             >
               View resume
-            </a>
+            </Link>
           )}
           <Link
             href="/contact"

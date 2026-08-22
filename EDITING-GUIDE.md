@@ -1,69 +1,71 @@
 # How to edit your website (no coding needed)
 
-Your site has a private editing area — like a control panel — at:
+Your editing area lives at **yourdomain.com/studio**. Log in with your email.
 
-**yourdomain.com/studio**
+The studio is organized to mirror the website: **one item per page**, in the same order as
+the menu. Whatever is on a page of the site is edited on that page in the studio.
 
-Log in with your email. Golden rule: **nothing goes live until you press Publish** on the
-document you edited. If something you added isn't showing on the site, 99% of the time it's
-still a draft — open it and hit Publish. After publishing, give the site about a minute and
-refresh.
+Two rules that explain almost everything:
 
-Second rule: **blank means hidden.** Any field you leave empty (a tagline, a phone number, a
-homepage button, your representation) simply disappears from the site — nothing breaks. Delete
-the text to hide it; fill it in to bring it back.
+1. **Nothing goes live until you press Publish.** Edits are saved as a private draft until
+   then. If a change isn't showing on the site, scroll down and hit **Publish**, then give it
+   about a minute and refresh.
+2. **Blank means hidden.** Any field you leave empty disappears from the site — no
+   placeholder text, no empty box. Delete the text to hide something; type it back in to
+   bring it back.
 
-## The eight things you can edit
+## The pages
 
-1. **Site Settings** — your name, the tagline (the small line ABOVE your name on the
-   homepage), location, email, phone, the homepage buttons (e.g. "Watch the reel"), social
-   links, representation, and your **resume PDF** — the "Resume" link in the menu opens
-   exactly the file you upload here, in a new tab (viewers can save or print it from there).
-   Remove the file and the Resume link disappears from the menu entirely.
+**Home Page** — your name, the tagline above it, your location, the short bio line below your
+name, the home page headshot, and the buttons (each button is a label plus where it goes, like
+`/actor` or `/resume`). Delete a button to hide it.
 
-   The **contact form key** also lives here: grab a free key at web3forms.com (enter the
-   email that should receive messages), paste it in, Publish — the Contact form starts
-   delivering to your inbox within a minute.
+**About** — the page headline, your bio paragraphs, the pull quote, the main photo, and the
+candid photos (the montage of three-across thumbnails under the main photo; visitors can click
+one to see it full size).
 
-2. **Bio** — the sentence BELOW your name on the homepage ("Short bio"), the full paragraphs
-   and pull quote on the About page (press Enter inside a paragraph for a line break, or add
-   a new paragraph item for a full break), your homepage headshot, the About page main photo,
-   and the **candid photos** — the montage of small photos under the main About photo
-   (visitors can click them to see full size).
+**Actor Page** — the headline, main image, extra images (they appear as thumbnails under the
+main one), your intro paragraph, and the two section headings ("Videos" and "Photos").
+Underneath the page you'll also find:
+- **Photo Galleries** — one per label (e.g. "Headshots", or a production name). Inside a
+  gallery, the first photo is the lead image and the rest become thumbnails.
+- **Videos** — paste a YouTube or Vimeo link and the site builds the player.
 
-3. **Actor Page** — the page headline, the main image plus up to two extra images (shown as
-   thumbnails under it — visitors can click any image to see it full size), and the intro
-   paragraph.
+**Director Page** — the headline, the wide lead image, an optional **review quote laid over
+that image** (with controls for its size, color, and where it sits on the photo), your
+artistic statement, and the "Productions" heading. Underneath the page:
+- **Productions** — one per show: title, year, venue, your role, description, a cover photo
+  (the lead image), the photo gallery, and an optional video link.
 
-4. **Director Page** — the page headline, the wide lead image across the top (use the crop
-   tool and drag the hotspot circle onto the focal point — the site shows a wide cinematic
-   slice and keeps that point in view), and your artistic statement.
+**Resume Page** — up to two resume PDFs. One shows centered; two show side by side. Each has
+buttons to view full screen and to download. Below them is **Upcoming Projects** — leave that
+list empty and the whole section disappears from the page.
 
-5. **Acting Galleries** — labeled photo galleries on the Actor page (e.g. "Headshots",
-   "Production Stills"). Create one gallery per label, then add photos inside it — the first
-   photo is the lead image, the rest appear as thumbnails, and visitors can flip through with
-   arrows or click for full size. **To reorder the galleries on the page**, change each
-   gallery's **Sort order** number — lower numbers show first (e.g. Headshots 10,
-   Stills 20).
+**Contact Page** — your email, phone, social links, and representation, plus every bit of text
+on the page (headline, field labels, button, thank-you message). The **contact form key** also
+lives here: get a free key at web3forms.com (enter the email that should receive messages),
+paste it in, Publish, and the form starts delivering to your inbox.
 
-6. **Directing Projects** — one per production, shown as galleries on the Director page.
-   Title, year, venue, your role, a short description, a cover photo (the lead image), the
-   photo gallery (thumbnails under the lead), and optionally a YouTube/Vimeo link. Reorder
-   with the same **Sort order** number.
+**Footer** — how tall it is, what it shows (your email, the page links, your socials, an extra
+line of text), and **which pages it appears on**. Untick a page and the footer is gone from it.
 
-7. **Contact Page** — every bit of text on the Contact page: the headline, the label above
-   the form, the Name/Email/Message field labels, the send button, and the thank-you message
-   shown after sending. (The email address, phone, socials, and representation shown beside
-   the form come from Site Settings.)
+## Putting things in the order you want
 
-8. **Videos** — the clips on the Actor page. Paste a normal YouTube or Vimeo link — the site
-   turns it into a player automatically. Reorder with the **Sort order** number.
+On the **Actor Page** there are two lists — *Videos* and *Photo galleries* — and on the
+**Director Page** there's *Productions*. These lists control the order things appear on the
+website:
+
+- **Drag** an item up or down to reorder it.
+- Press **＋** to add one: pick something you've already made, or create a new one right there.
+- **Removing** an item from the list hides it from the page without deleting it.
+- If a list is left completely empty, everything of that kind shows up, oldest first.
 
 ## Tips
 
-- You can't break the design — layout, fonts, and colors are fixed; you only change the words
-  and pictures inside it.
-- Photos: upload the highest-quality version you have; the site resizes automatically.
-- If something looks wrong after an edit, just re-open the document, fix it, and Publish again.
-- If a photo you added isn't showing up: you almost certainly haven't published yet — look for
-  the Publish button at the bottom of the document.
+- You can't break the design — layout, fonts, and colors are fixed; you change the words and
+  pictures inside them.
+- Photos: upload the best quality you have; the site resizes automatically.
+- For images that get cropped to a shape (the Director lead image, the candid squares), use
+  the crop tool and drag the **hotspot** circle onto the important part — the site keeps that
+  point in view.
+- If a photo you added isn't showing up: you almost certainly haven't published yet.

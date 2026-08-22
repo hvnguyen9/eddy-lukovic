@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Archivo, Fraunces } from "next/font/google";
-import { getSite } from "@/lib/content";
+import { getHome } from "@/lib/content";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -15,17 +15,17 @@ const archivo = Archivo({
 });
 
 export async function generateMetadata(): Promise<Metadata> {
-  const site = await getSite();
-  const title = [site.name, site.tagline].filter(Boolean).join(" — ");
-  const who = [site.tagline || "actor and director", site.location && `based in ${site.location}`]
+  const home = await getHome();
+  const title = [home.name, home.tagline].filter(Boolean).join(" — ");
+  const who = [home.tagline || "actor and director", home.location && `based in ${home.location}`]
     .filter(Boolean)
     .join(", ");
   return {
     title: {
       default: title,
-      template: `%s — ${site.name}`,
+      template: `%s — ${home.name}`,
     },
-    description: `${site.name}, ${who}. Reel, resume, photos, and contact.`,
+    description: `${home.name}, ${who}. Reel, resume, photos, and contact.`,
   };
 }
 

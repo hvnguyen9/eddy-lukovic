@@ -4,7 +4,8 @@ export const video = defineType({
   name: "video",
   title: "Video",
   type: "document",
-  description: "Reels, clips, and self-tapes. Paste a YouTube or Vimeo link.",
+  description:
+    'A clip on the Actor page. Paste a YouTube or Vimeo link. Set the order they appear in on the Actor Page, under "Videos".',
   fields: [
     defineField({ name: "title", title: "Title", type: "string", validation: (r) => r.required() }),
     defineField({
@@ -23,17 +24,6 @@ export const video = defineType({
       description: "Paste the normal share link. Leave empty to show a “coming soon” slate.",
     }),
     defineField({ name: "description", title: "One-line description", type: "string" }),
-    defineField({
-      name: "featured",
-      title: "Featured",
-      type: "boolean",
-      description: "The featured video is the big one on the homepage and Media page.",
-      initialValue: false,
-    }),
-    defineField({ name: "order", title: "Sort order", type: "number", initialValue: 100 }),
-  ],
-  orderings: [
-    { title: "Sort order", name: "orderAsc", by: [{ field: "order", direction: "asc" }] },
   ],
   preview: { select: { title: "title", subtitle: "kind" } },
 });

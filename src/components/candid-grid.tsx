@@ -13,7 +13,7 @@ export function CandidGrid({ photos }: { photos: ImageRef[] }) {
 
   return (
     <>
-      <div className="mx-auto mt-8 grid max-w-sm grid-cols-3 gap-3 md:mx-0 md:max-w-none">
+      <div className="mt-3 grid w-full grid-cols-3 gap-3">
         {photos.map((photo, i) => (
           <button
             key={photo.src}

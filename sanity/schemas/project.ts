@@ -2,9 +2,10 @@ import { defineField, defineType } from "sanity";
 
 export const project = defineType({
   name: "project",
-  title: "Directing Project",
+  title: "Production",
   type: "document",
-  description: "A production gallery on the Director page: cover photo, gallery, description, optional video.",
+  description:
+    'A production gallery. Set the order they appear in on the Director Page, under "Productions".',
   fields: [
     defineField({ name: "title", title: "Title", type: "string", validation: (r) => r.required() }),
     defineField({ name: "year", title: "Year", type: "string" }),
@@ -47,16 +48,12 @@ export const project = defineType({
       type: "url",
       description: "YouTube or Vimeo link — trailer, archival footage, etc.",
     }),
-    defineField({ name: "order", title: "Sort order", type: "number", description: "Lower numbers show first.", initialValue: 100 }),
-  ],
-  orderings: [
-    { title: "Sort order", name: "orderAsc", by: [{ field: "order", direction: "asc" }] },
   ],
   preview: {
-    select: { title: "title", year: "year", order: "order", media: "cover" },
-    prepare: ({ title, year, order, media }) => ({
+    select: { title: "title", year: "year", company: "company", media: "cover" },
+    prepare: ({ title, year, company, media }) => ({
       title,
-      subtitle: `${year ?? ""} · Sort order: ${order ?? "—"}`,
+      subtitle: [year, company].filter(Boolean).join(" · "),
       media,
     }),
   },

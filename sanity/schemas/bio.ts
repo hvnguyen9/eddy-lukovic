@@ -1,50 +1,48 @@
 import { defineField, defineType } from "sanity";
 
+// Document type stays "bio" so existing content is preserved; the studio
+// presents it as "About".
 export const bio = defineType({
   name: "bio",
-  title: "Bio",
+  title: "About",
   type: "document",
+  description: "Everything that appears on the About page.",
   fields: [
     defineField({
-      name: "shortBio",
-      title: "Short bio",
-      type: "text",
-      rows: 3,
-      description: "The sentence BELOW your name on the homepage. Leave blank to hide.",
+      name: "heading",
+      title: "Page headline",
+      type: "string",
+      description: "The big headline (the last word gets the accent style). Leave blank to hide.",
+      initialValue: "The long version, kept short.",
     }),
     defineField({
       name: "paragraphs",
-      title: "Full bio paragraphs",
+      title: "Bio paragraphs",
       type: "array",
       of: [{ type: "text", rows: 4 }],
-      description: "Each item is one paragraph on the About page.",
+      description:
+        "Each item is one paragraph. Pressing Enter inside an item also creates a line break.",
     }),
     defineField({
       name: "pullQuote",
       title: "Pull quote",
       type: "string",
-      description: "A short line highlighted in big type on the About page. Leave blank to hide.",
-    }),
-    defineField({
-      name: "headshot",
-      title: "Homepage headshot",
-      type: "image",
-      options: { hotspot: true },
-      description: "The big photo on the homepage.",
-      fields: [defineField({ name: "alt", title: "Description (for accessibility)", type: "string" })],
+      description: "A short line highlighted in big type. Leave blank to hide.",
     }),
     defineField({
       name: "secondaryPhoto",
-      title: "About page main photo",
+      title: "Main photo",
       type: "image",
       options: { hotspot: true },
+      description: "The large photo on the About page.",
       fields: [defineField({ name: "alt", title: "Description (for accessibility)", type: "string" })],
     }),
     defineField({
       name: "candids",
-      title: "About page candid photos",
+      title: "Candid photos",
       type: "array",
-      description: "Small fun/candid photos shown in a row under the main About photo — a little montage of you.",
+      description:
+        "Small photos shown in rows of three under the main photo — your montage. Visitors can click one to see it full size.",
       of: [
         {
           type: "image",
@@ -54,5 +52,5 @@ export const bio = defineType({
       ],
     }),
   ],
-  preview: { prepare: () => ({ title: "Bio" }) },
+  preview: { prepare: () => ({ title: "About" }) },
 });

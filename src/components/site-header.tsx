@@ -4,19 +4,26 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
-// The Resume entry opens the uploaded PDF directly (via the /resume redirect)
-// in a new tab, and is hidden entirely when no PDF has been uploaded.
-export function SiteHeader({ showResume }: { showResume: boolean }) {
+// The Resume entry is hidden until at least one resume is uploaded.
+export function SiteHeader({ name, showResume }: { name: string; showResume: boolean }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
-  const links: { href: string; label: string; external?: boolean }[] = [
+  const links = [
     { href: "/about", label: "About" },
     { href: "/actor", label: "Actor" },
     { href: "/director", label: "Director" },
-    ...(showResume ? [{ href: "/resume", label: "Resume", external: true }] : []),
+    ...(showResume ? [{ href: "/resume", label: "Resume" }] : []),
     { href: "/contact", label: "Contact" },
   ];
+
+  const initials = name
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((part) => part[0])
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
 
   return (
     <header className="sticky top-0 z-50 border-b border-line bg-bone/90 backdrop-blur-sm">
@@ -26,37 +33,27 @@ export function SiteHeader({ showResume }: { showResume: boolean }) {
           onClick={() => setOpen(false)}
           className="flex items-center gap-3"
         >
-          <span className="grid size-8 place-items-center border border-ink font-(family-name:--font-display) text-sm italic">
-            EL
-          </span>
+          {initials && (
+            <span className="grid size-8 place-items-center border border-ink font-(family-name:--font-display) text-sm italic">
+              {initials}
+            </span>
+          )}
           <span className="text-[0.8rem] font-semibold uppercase tracking-[0.22em]">
-            Eddy Lukovic
+            {name}
           </span>
         </Link>
 
         <nav className="hidden items-center gap-8 sm:flex">
-          {links.map((link) =>
-            link.external ? (
-              <a
-                key={link.href}
-                href={link.href}
-                target="_blank"
-                rel="noreferrer"
-                className="nav-link text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-ink-soft hover:text-ink"
-              >
-                {link.label}
-              </a>
-            ) : (
-              <Link
-                key={link.href}
-                href={link.href}
-                data-active={pathname === link.href}
-                className="nav-link text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-ink-soft hover:text-ink data-[active=true]:text-ink"
-              >
-                {link.label}
-              </Link>
-            )
-          )}
+          {links.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              data-active={pathname === link.href}
+              className="nav-link text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-ink-soft hover:text-ink data-[active=true]:text-ink"
+            >
+              {link.label}
+            </Link>
+          ))}
         </nav>
 
         <button
@@ -80,25 +77,13 @@ export function SiteHeader({ showResume }: { showResume: boolean }) {
           <ul className="flex flex-col gap-5">
             {links.map((link) => (
               <li key={link.href}>
-                {link.external ? (
-                  <a
-                    href={link.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    onClick={() => setOpen(false)}
-                    className="display text-2xl italic"
-                  >
-                    {link.label}
-                  </a>
-                ) : (
-                  <Link
-                    href={link.href}
-                    onClick={() => setOpen(false)}
-                    className="display text-2xl italic"
-                  >
-                    {link.label}
-                  </Link>
-                )}
+                <Link
+                  href={link.href}
+                  onClick={() => setOpen(false)}
+                  className="display text-2xl italic"
+                >
+                  {link.label}
+                </Link>
               </li>
             ))}
           </ul>

@@ -16,13 +16,19 @@ font swaps are one-file changes.
 
 | Route | Content |
 |---|---|
-| `/` | Minimal hero only: toolbar, name, headshot, optional CMS-driven buttons. No footer. |
-| `/about` | Bio paragraphs + pull quote; main photo with a candid-photo montage beneath |
-| `/actor` | Main image + intro, Videos band (embeds), labeled photo galleries (lead + thumbnails) |
-| `/director` | Edge-to-edge lead image, artistic statement, production galleries (lead + thumbnails) |
-| `/resume` | Redirects straight to the uploaded PDF (Site Settings → Resume PDF); opens in a new tab from the nav. The Resume link hides site-wide when no PDF is uploaded |
+| `/` | Minimal hero only: toolbar, name, headshot, optional CMS-driven buttons |
+| `/about` | Headline, bio paragraphs, pull quote; main photo with a 3-across candid montage beneath |
+| `/actor` | Main image (+extras) + intro, Videos band (3-up embeds), labeled photo galleries |
+| `/director` | Edge-to-edge lead image with optional review-quote overlay, statement, production galleries |
+| `/resume` | Up to 2 resume PDFs (1 centered, 2 side by side) with full-screen + download, then Upcoming Projects |
 | `/contact` | Contact form (Web3Forms) + whatever contact fields are filled in |
 | `/studio` | Sanity Studio — Eddy's editing UI |
+
+The studio mirrors the site: one document per page, in menu order. Repeatable content
+(galleries, productions, videos) stays as separate documents but is **ordered by a
+drag-to-reorder reference list on its page document** (`actorPage.galleries`,
+`actorPage.videos`, `directorPage.productions`). An empty list falls back to "show all,
+oldest first" so content never vanishes before the list is populated.
 
 Old routes (`/media`, `/gallery/*`, `/resume/acting|directing`) redirect to their successors.
 
@@ -38,8 +44,9 @@ acting galleries and the directing production galleries.
 
 **Every word, photo, and video on the site flows through `src/lib/content.ts`.** It has two modes:
 
-1. **Seed mode:** serves the JSON files in `/content` (`site.json`, `bio.json`, `actor.json`,
-   `director.json`, `galleries.json`, `projects.json`, `videos.json`). Demo/local only.
+1. **Seed mode:** serves the JSON files in `/content` (`home.json`, `about.json`, `actor.json`,
+   `director.json`, `resume.json`, `contact.json`, `footer.json`, `galleries.json`,
+   `projects.json`, `videos.json`). Demo/local only.
 2. **CMS mode:** when `NEXT_PUBLIC_SANITY_PROJECT_ID` is set, everything comes from Sanity
    (60s ISR revalidate) and blank means hidden — no seed fallbacks except the site name. The
    Sanity schemas (`sanity/schemas/`) mirror the JSON shapes.
@@ -55,8 +62,8 @@ Placeholder assets to replace with real ones: SVGs in `public/images/`, the plac
 3. In the project's **API → CORS origins**, add `http://localhost:3000` and the production domain
    (with credentials allowed) so the embedded studio at `/studio` can talk to the API.
 4. Invite Eddy as a member (role: Editor) so he can log into `/studio` with just his email.
-5. Open `/studio`, fill the four singletons (Site Settings, Bio, Actor Page, Director Page)
-   and add Acting Galleries / Directing Projects / Videos. Blank fields hide their elements.
+5. Open `/studio` and fill in the page documents (Home Page, About, Actor Page, Director Page,
+   Resume Page, Contact Page, Footer). Blank fields hide their elements.
 
 Published edits appear on the live site within ~60 seconds (ISR revalidate).
 
@@ -70,9 +77,9 @@ Until connected, submitting shows a "not taking messages yet" notice.
 
 1. Go to web3forms.com → **Create your Access Key** → enter the email that should receive
    messages (Eddy's). The key arrives by email instantly; no account needed.
-2. Paste the key into **Studio → Site Settings → Contact form key** and Publish. Live within a
-   minute — no deploy needed. (`NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY` still works as an env-var
-   fallback when the CMS field is blank.)
+2. Paste the key into **Studio → Contact Page → Form setup → Contact form key** and Publish.
+   Live within a minute — no deploy needed. (`NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY` still works as
+   an env-var fallback when the CMS field is blank.)
 3. The key is public-safe (it only routes to the inbox). If spam ever becomes a problem,
    Web3Forms supports hCaptcha — add it then, not before.
 

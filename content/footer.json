@@ -1,0 +1,8 @@
+{
+  "pages": ["about", "actor", "director", "resume", "contact"],
+  "size": "compact",
+  "showEmail": true,
+  "showNav": true,
+  "showSocials": true,
+  "customText": ""
+}

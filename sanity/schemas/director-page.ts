@@ -7,6 +7,13 @@ export const directorPage = defineType({
   description: "The Director page. Productions are edited in the list under this page.",
   fields: [
     defineField({
+      name: "eyebrow",
+      title: "Section label",
+      type: "string",
+      description: 'The small label above the headline. Defaults to "Director" if left blank.',
+      initialValue: "Director",
+    }),
+    defineField({
       name: "heading",
       title: "Page headline",
       type: "string",
@@ -33,14 +40,22 @@ export const directorPage = defineType({
           name: "text",
           title: "Quote",
           type: "text",
-          rows: 3,
-          description: 'The quote itself — no need to type quotation marks, the site adds them.',
+          rows: 4,
+          description:
+            "Appears exactly as you type it — press Enter wherever you want a new line. Quotation marks are added for you unless you turn that off below.",
         }),
         defineField({
           name: "attribution",
           title: "Credit",
           type: "string",
-          description: 'Who said it, e.g. "San Diego Union-Tribune". Leave blank to hide.',
+          description: 'Who said it, e.g. "Pam Kragen — San Diego Union-Tribune". Leave blank to hide.',
+        }),
+        defineField({
+          name: "quotationMarks",
+          title: "Add quotation marks",
+          type: "boolean",
+          description: "Turn off if you want to type your own punctuation.",
+          initialValue: true,
         }),
         defineField({
           name: "size",
@@ -72,7 +87,7 @@ export const directorPage = defineType({
         }),
         defineField({
           name: "position",
-          title: "Position on the image",
+          title: "Where the quote sits on the image",
           type: "string",
           options: {
             list: [
@@ -90,27 +105,48 @@ export const directorPage = defineType({
           initialValue: "bottom-left",
         }),
         defineField({
+          name: "align",
+          title: "Text justification",
+          type: "string",
+          description: "How the lines line up with each other.",
+          options: {
+            list: [
+              { title: "Left", value: "left" },
+              { title: "Center", value: "center" },
+              { title: "Right", value: "right" },
+            ],
+            layout: "radio",
+          },
+          initialValue: "left",
+        }),
+        defineField({
+          name: "shadow",
+          title: "Drop shadow on the text",
+          type: "boolean",
+          description: "Helps the words stand out against a busy photo.",
+          initialValue: true,
+        }),
+        defineField({
           name: "scrim",
           title: "Darken the photo behind the text",
           type: "boolean",
-          description: "Helps the words stay readable over a busy photo.",
           initialValue: true,
         }),
       ],
     }),
     defineField({
-      name: "statement",
+      name: "statementRich",
       title: "Artistic statement",
-      type: "text",
-      rows: 6,
-      description: "A brief statement about how you work. Press Enter for paragraph breaks.",
+      type: "richText",
+      description:
+        "Select any words and use the toolbar (or Cmd+I) to italicize them. Enter starts a new paragraph.",
     }),
     defineField({
       name: "productionsHeading",
-      title: "Productions section heading",
+      title: "Production photos section heading",
       type: "string",
-      description: "The subheading above your production galleries. Leave blank to hide the heading.",
-      initialValue: "Productions",
+      description: 'The subheading above your production galleries — e.g. "Production Photos".',
+      initialValue: "Production Photos",
     }),
     defineField({
       name: "productions",

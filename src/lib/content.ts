@@ -11,6 +11,7 @@
 
 import { createClient } from "next-sanity";
 import { createImageUrlBuilder, type SanityImageSource } from "@sanity/image-url";
+import type { PortableTextBlock } from "@portabletext/react";
 import { apiVersion, dataset, projectId, sanityEnabled } from "../../sanity/env";
 
 import homeJson from "../../content/home.json";
@@ -35,6 +36,10 @@ export interface CaptionedImage extends ImageRef {
   caption?: string;
 }
 
+// Paragraph content edited with the studio's formatting toolbar (italic,
+// bold, links). Empty array means nothing was entered.
+export type RichText = PortableTextBlock[];
+
 export interface LinkRef {
   label: string;
   url: string;
@@ -52,6 +57,7 @@ export interface HomeContent {
 }
 
 export interface AboutContent {
+  eyebrow: string;
   heading: string;
   paragraphs: string[];
   pullQuote: string;
@@ -65,22 +71,31 @@ export interface ImageQuote {
   size: "small" | "medium" | "large";
   color: "light" | "dark" | "accent";
   position: string;
+  align: "left" | "center" | "right";
   scrim: boolean;
+  shadow: boolean;
+  quotationMarks: boolean;
 }
 
 export interface ActorPageContent {
+  eyebrow: string;
   heading: string;
   image: ImageRef | null;
   extraImages: ImageRef[];
+  // Rich version wins; `intro` is the pre-formatting plain text kept so the
+  // page keeps reading correctly until the rich field is filled in.
+  introRich: RichText;
   intro: string;
   videosHeading: string;
   photosHeading: string;
 }
 
 export interface DirectorPageContent {
+  eyebrow: string;
   heading: string;
   leadImage: ImageRef | null;
   quote: ImageQuote | null;
+  statementRich: RichText;
   statement: string;
   productionsHeading: string;
 }
@@ -97,10 +112,12 @@ export interface UpcomingProject {
   role: string;
   company: string;
   dates: string;
+  url: string;
   note: string;
 }
 
 export interface ResumePageContent {
+  eyebrow: string;
   heading: string;
   resumes: ResumeEntry[];
   upcomingHeading: string;
@@ -108,6 +125,7 @@ export interface ResumePageContent {
 }
 
 export interface ContactContent {
+  eyebrow: string;
   heading: string;
   formLabel: string;
   directLabel: string;
@@ -138,6 +156,9 @@ export interface FooterContent {
 
 export interface ActingGallery {
   title: string;
+  company: string;
+  role: string;
+  year: string;
   photos: CaptionedImage[];
 }
 
@@ -250,6 +271,7 @@ export async function getAbout(): Promise<AboutContent> {
     Omit<AboutContent, "candids"> & { candidsRaw: RawSanityImage[] }
   >(`
     *[_type == "bio"][0]{
+      "eyebrow": coalesce(eyebrow, "About"),
       "heading": coalesce(heading, ""),
       "paragraphs": coalesce(paragraphs, []),
       "pullQuote": coalesce(pullQuote, ""),
@@ -257,7 +279,7 @@ export async function getAbout(): Promise<AboutContent> {
       "candidsRaw": coalesce(candids[defined(asset)], [])
     }`);
   if (!doc) {
-    return { heading: "", paragraphs: [], pullQuote: "", mainPhoto: null, candids: [] };
+    return { eyebrow: "About", heading: "", paragraphs: [], pullQuote: "", mainPhoto: null, candids: [] };
   }
   return {
     ...doc,
@@ -270,30 +292,45 @@ export async function getAbout(): Promise<AboutContent> {
 export async function getActorPage(): Promise<ActorPageContent> {
   if (!sanityEnabled) return actorJson as ActorPageContent;
   const doc = await fetchSanity<{
+    eyebrow: string;
     heading: string;
     image: ImageRef | null;
     extraImagesRaw: RawSanityImage[];
+    introRich: RichText;
     intro: string;
     videosHeading: string;
     photosHeading: string;
   }>(`
     *[_type == "actorPage"][0]{
+      "eyebrow": coalesce(eyebrow, "Actor"),
       "heading": coalesce(heading, ""),
       "image": ${img("image", '"Headshot"')},
       "extraImagesRaw": coalesce(extraImages[defined(asset)], []),
+      "introRich": coalesce(introRich, []),
       "intro": coalesce(intro, ""),
-      "videosHeading": coalesce(videosHeading, ""),
-      "photosHeading": coalesce(photosHeading, "")
+      "videosHeading": coalesce(videosHeading, "Videos"),
+      "photosHeading": coalesce(photosHeading, "Photos")
     }`);
   if (!doc) {
-    return { heading: "", image: null, extraImages: [], intro: "", videosHeading: "", photosHeading: "" };
+    return {
+      eyebrow: "Actor",
+      heading: "",
+      image: null,
+      extraImages: [],
+      introRich: [],
+      intro: "",
+      videosHeading: "Videos",
+      photosHeading: "Photos",
+    };
   }
   return {
+    eyebrow: doc.eyebrow,
     heading: doc.heading,
     image: doc.image,
     extraImages: doc.extraImagesRaw
       .map((raw) => croppedImage(raw, 1600, 2000, "Photo"))
       .filter((c): c is ImageRef => c !== null),
+    introRich: doc.introRich,
     intro: doc.intro,
     videosHeading: doc.videosHeading,
     photosHeading: doc.photosHeading,
@@ -303,24 +340,38 @@ export async function getActorPage(): Promise<ActorPageContent> {
 export async function getDirectorPage(): Promise<DirectorPageContent> {
   if (!sanityEnabled) return directorJson as DirectorPageContent;
   const doc = await fetchSanity<{
+    eyebrow: string;
     heading: string;
     leadImageRaw: RawSanityImage | null;
     quote: Partial<ImageQuote> | null;
+    statementRich: RichText;
     statement: string;
     productionsHeading: string;
   }>(`
     *[_type == "directorPage"][0]{
+      "eyebrow": coalesce(eyebrow, "Director"),
       "heading": coalesce(heading, ""),
       "leadImageRaw": leadImage,
       quote,
+      "statementRich": coalesce(statementRich, []),
       "statement": coalesce(statement, ""),
-      "productionsHeading": coalesce(productionsHeading, "")
+      "productionsHeading": coalesce(productionsHeading, "Production Photos")
     }`);
   if (!doc) {
-    return { heading: "", leadImage: null, quote: null, statement: "", productionsHeading: "" };
+    return {
+      eyebrow: "Director",
+      heading: "",
+      leadImage: null,
+      quote: null,
+      statementRich: [],
+      statement: "",
+      productionsHeading: "Production Photos",
+    };
   }
+  // Only trim the ends — inner line breaks are exactly what was typed.
   const quoteText = doc.quote?.text?.trim();
   return {
+    eyebrow: doc.eyebrow,
     heading: doc.heading,
     // 21:9 cinematic crop that honors the studio's crop/hotspot
     leadImage: croppedImage(doc.leadImageRaw, 2400, 1029, "Directing work"),
@@ -331,9 +382,13 @@ export async function getDirectorPage(): Promise<DirectorPageContent> {
           size: doc.quote?.size ?? "medium",
           color: doc.quote?.color ?? "light",
           position: doc.quote?.position ?? "bottom-left",
+          align: doc.quote?.align ?? "left",
           scrim: doc.quote?.scrim ?? true,
+          shadow: doc.quote?.shadow ?? true,
+          quotationMarks: doc.quote?.quotationMarks ?? true,
         }
       : null,
+    statementRich: doc.statementRich,
     statement: doc.statement,
     productionsHeading: doc.productionsHeading,
   };
@@ -342,12 +397,14 @@ export async function getDirectorPage(): Promise<DirectorPageContent> {
 export async function getResumePage(): Promise<ResumePageContent> {
   if (!sanityEnabled) return resumeJson as ResumePageContent;
   const doc = await fetchSanity<{
+    eyebrow: string;
     heading: string;
     resumes: { label: string; fileUrl: string; fileName: string; previewRaw: RawSanityImage | null }[];
     upcomingHeading: string;
     upcoming: UpcomingProject[];
   }>(`
     *[_type == "resumePage"][0]{
+      "eyebrow": coalesce(eyebrow, "Resume"),
       "heading": coalesce(heading, ""),
       "resumes": coalesce(resumes[defined(file.asset)]{
         "label": coalesce(label, ""),
@@ -355,17 +412,21 @@ export async function getResumePage(): Promise<ResumePageContent> {
         "fileName": coalesce(file.asset->originalFilename, "resume.pdf"),
         "previewRaw": preview
       }, []),
-      "upcomingHeading": coalesce(upcomingHeading, ""),
+      "upcomingHeading": coalesce(upcomingHeading, "Upcoming Projects"),
       "upcoming": coalesce(upcoming[]{
         "title": coalesce(title, ""),
         "role": coalesce(role, ""),
         "company": coalesce(company, ""),
         "dates": coalesce(dates, ""),
+        "url": coalesce(url, ""),
         "note": coalesce(note, "")
       }, [])
     }`);
-  if (!doc) return { heading: "", resumes: [], upcomingHeading: "", upcoming: [] };
+  if (!doc) {
+    return { eyebrow: "Resume", heading: "", resumes: [], upcomingHeading: "Upcoming Projects", upcoming: [] };
+  }
   return {
+    eyebrow: doc.eyebrow,
     heading: doc.heading,
     resumes: doc.resumes.map((r) => ({
       label: r.label,
@@ -383,6 +444,7 @@ export async function getContact(): Promise<ContactContent> {
   if (!sanityEnabled) return fallback;
   const doc = await fetchSanity<Partial<ContactContent>>(`
     *[_type == "contactPage"][0]{
+      "eyebrow": coalesce(eyebrow, "Contact"),
       "heading": coalesce(heading, ""),
       formLabel, directLabel, elsewhereLabel, nameLabel, emailLabel, messageLabel,
       buttonText, successTitle, successText,
@@ -401,6 +463,7 @@ export async function getContact(): Promise<ContactContent> {
   // Headings and details are content: blank hides them.
   if (!doc) return fallback;
   return {
+    eyebrow: doc.eyebrow ?? "Contact",
     heading: doc.heading ?? "",
     formLabel: doc.formLabel ?? fallback.formLabel,
     directLabel: doc.directLabel ?? fallback.directLabel,
@@ -452,6 +515,9 @@ async function ordered<T>(
 
 const GALLERY_FIELDS = `{
   "title": coalesce(title, ""),
+  "company": coalesce(company, ""),
+  "role": coalesce(role, ""),
+  "year": coalesce(year, ""),
   "photos": coalesce(photos[defined(asset)]{
     "src": asset->url,
     "alt": coalesce(alt, caption, "Photo"),

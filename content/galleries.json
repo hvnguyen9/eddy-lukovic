@@ -3,18 +3,48 @@
     {
       "title": "Headshots",
       "photos": [
-        { "src": "/images/headshot-primary.svg", "alt": "Primary headshot", "caption": "Primary — 2026" },
-        { "src": "/images/headshot-alt.svg", "alt": "Commercial headshot", "caption": "Commercial" },
-        { "src": "/images/headshot-theatrical.svg", "alt": "Theatrical headshot", "caption": "Theatrical" }
-      ]
+        {
+          "src": "/images/headshot-primary.svg",
+          "alt": "Primary headshot",
+          "caption": "Primary — 2026"
+        },
+        {
+          "src": "/images/headshot-alt.svg",
+          "alt": "Commercial headshot",
+          "caption": "Commercial"
+        },
+        {
+          "src": "/images/headshot-theatrical.svg",
+          "alt": "Theatrical headshot",
+          "caption": "Theatrical"
+        }
+      ],
+      "company": "",
+      "role": "",
+      "year": ""
     },
     {
       "title": "Production Stills",
       "photos": [
-        { "src": "/images/still-01.svg", "alt": "Still from Northbound", "caption": "'Northbound' (2026)" },
-        { "src": "/images/still-02.svg", "alt": "On stage in The Seagull", "caption": "'The Seagull' (2025)" },
-        { "src": "/images/still-03.svg", "alt": "Behind the scenes", "caption": "'The Quiet Hours' — BTS" }
-      ]
+        {
+          "src": "/images/still-01.svg",
+          "alt": "Still from Northbound",
+          "caption": "'Northbound' (2026)"
+        },
+        {
+          "src": "/images/still-02.svg",
+          "alt": "On stage in The Seagull",
+          "caption": "'The Seagull' (2025)"
+        },
+        {
+          "src": "/images/still-03.svg",
+          "alt": "Behind the scenes",
+          "caption": "'The Quiet Hours' — BTS"
+        }
+      ],
+      "company": "",
+      "role": "",
+      "year": ""
     }
   ]
 }

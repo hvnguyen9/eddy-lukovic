@@ -13,7 +13,7 @@ export default async function ContactPage() {
 
   return (
     <section className="mx-auto max-w-6xl px-6 pt-10 pb-16 md:pt-14">
-      <p className="eyebrow">Contact</p>
+      {contact.eyebrow && <p className="eyebrow">{contact.eyebrow}</p>}
       <AccentHeading
         text={contact.heading}
         className="display mt-6 max-w-3xl text-5xl leading-tight font-medium sm:text-6xl"

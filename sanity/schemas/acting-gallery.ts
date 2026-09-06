@@ -14,6 +14,24 @@ export const actingGallery = defineType({
       validation: (r) => r.required(),
     }),
     defineField({
+      name: "company",
+      title: "Production / venue",
+      type: "string",
+      description: 'e.g. "Roustabouts Theatre Company". Leave blank to hide.',
+    }),
+    defineField({
+      name: "role",
+      title: "Your role",
+      type: "string",
+      description: 'e.g. "Benjamin". Leave blank to hide.',
+    }),
+    defineField({
+      name: "year",
+      title: "Year",
+      type: "string",
+      description: "Leave blank to hide.",
+    }),
+    defineField({
       name: "photos",
       title: "Photos",
       type: "array",
@@ -32,10 +50,10 @@ export const actingGallery = defineType({
     }),
   ],
   preview: {
-    select: { title: "title", photos: "photos", media: "photos.0" },
-    prepare: ({ title, photos, media }) => ({
+    select: { title: "title", company: "company", year: "year", photos: "photos", media: "photos.0" },
+    prepare: ({ title, company, year, photos, media }) => ({
       title,
-      subtitle: `${photos?.length ?? 0} photo${photos?.length === 1 ? "" : "s"}`,
+      subtitle: [company, year, `${photos?.length ?? 0} photos`].filter(Boolean).join(" · "),
       media,
     }),
   },

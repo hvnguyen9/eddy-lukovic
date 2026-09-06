@@ -7,6 +7,13 @@ export const resumePage = defineType({
   description: "Your resume PDFs and any upcoming projects.",
   fields: [
     defineField({
+      name: "eyebrow",
+      title: "Section label",
+      type: "string",
+      description: 'The small label above the headline. Defaults to "Resume" if left blank.',
+      initialValue: "Resume",
+    }),
+    defineField({
       name: "heading",
       title: "Page headline",
       type: "string",
@@ -84,6 +91,12 @@ export const resumePage = defineType({
             defineField({ name: "role", title: "Your role", type: "string", description: 'e.g. "Director" or "Lead — Marko"' }),
             defineField({ name: "company", title: "Company / venue", type: "string" }),
             defineField({ name: "dates", title: "Dates", type: "string", description: 'e.g. "Spring 2027"' }),
+            defineField({
+              name: "url",
+              title: "Link (optional)",
+              type: "url",
+              description: "Link the title to a ticket page or theatre website. Leave blank for no link.",
+            }),
             defineField({ name: "note", title: "Note", type: "text", rows: 2, description: "Optional extra detail." }),
           ],
           preview: { select: { title: "title", subtitle: "dates" } },

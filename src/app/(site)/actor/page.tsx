@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { AccentHeading } from "@/components/accent-heading";
 import { GalleryViewer } from "@/components/gallery-viewer";
+import { RichText } from "@/components/rich-text";
 import { SectionHeading } from "@/components/section-heading";
 import { VideoBlock } from "@/components/video-block";
 import { getActingGalleries, getActorPage, getVideos } from "@/lib/content";
@@ -27,13 +28,13 @@ export default async function ActorPage() {
           </div>
         )}
         <div>
-          <p className="eyebrow">Actor</p>
+          {page.eyebrow && <p className="eyebrow">{page.eyebrow}</p>}
           <AccentHeading text={page.heading} />
-          {page.intro && (
-            <p className="mt-8 max-w-xl text-lg leading-relaxed whitespace-pre-line text-ink-soft">
-              {page.intro}
-            </p>
-          )}
+          <RichText
+            value={page.introRich}
+            fallback={page.intro}
+            className="mt-8 max-w-xl text-lg leading-relaxed text-ink-soft"
+          />
         </div>
       </section>
 
@@ -56,14 +57,27 @@ export default async function ActorPage() {
         <section className="mx-auto max-w-6xl px-6 py-12">
           <SectionHeading text={page.photosHeading} />
           <div className="mt-8 grid gap-x-10 gap-y-10 md:grid-cols-2">
-            {galleries.map((gallery) => (
-              <div key={gallery.title}>
-                {gallery.title && <h3 className="display text-2xl italic">{gallery.title}</h3>}
-                <div className="mt-3">
-                  <GalleryViewer photos={gallery.photos} ratio="aspect-[4/3]" thumbCols={6} />
+            {galleries.map((gallery) => {
+              const credits = [gallery.role, gallery.company].filter(Boolean).join(" · ");
+              return (
+                <div key={gallery.title}>
+                  <div className="flex items-baseline justify-between gap-4">
+                    {gallery.title && (
+                      <h3 className="display text-2xl italic">{gallery.title}</h3>
+                    )}
+                    {gallery.year && (
+                      <span className="shrink-0 text-[0.68rem] font-semibold tracking-[0.2em] text-muted uppercase">
+                        {gallery.year}
+                      </span>
+                    )}
+                  </div>
+                  {credits && <p className="mt-1 text-sm text-ink-soft">{credits}</p>}
+                  <div className="mt-3">
+                    <GalleryViewer photos={gallery.photos} ratio="aspect-[4/3]" thumbCols={6} />
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </section>
       )}

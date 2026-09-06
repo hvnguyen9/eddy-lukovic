@@ -6,10 +6,23 @@
     "When he isn't on set or in rehearsal, Eddy writes, boxes badly, and makes a very serious pot of coffee."
   ],
   "pullQuote": "The best acting disappears — you don't watch it, you recognize it.",
-  "mainPhoto": { "src": "/images/headshot-alt.svg", "alt": "Eddy Lukovic — portrait" },
+  "mainPhoto": {
+    "src": "/images/headshot-alt.svg",
+    "alt": "Eddy Lukovic — portrait"
+  },
   "candids": [
-    { "src": "/images/still-03.svg", "alt": "Behind the scenes" },
-    { "src": "/images/still-04.svg", "alt": "In rehearsal" },
-    { "src": "/images/headshot-theatrical.svg", "alt": "Theatrical portrait" }
-  ]
+    {
+      "src": "/images/still-03.svg",
+      "alt": "Behind the scenes"
+    },
+    {
+      "src": "/images/still-04.svg",
+      "alt": "In rehearsal"
+    },
+    {
+      "src": "/images/headshot-theatrical.svg",
+      "alt": "Theatrical portrait"
+    }
+  ],
+  "eyebrow": "About"
 }

@@ -20,9 +20,18 @@ font swaps are one-file changes.
 | `/about` | Headline, bio paragraphs, pull quote; main photo with a 3-across candid montage beneath |
 | `/actor` | Main image (+extras) + intro, Videos band (3-up embeds), labeled photo galleries |
 | `/director` | Edge-to-edge lead image with optional review-quote overlay, statement, production galleries |
-| `/resume` | Up to 2 resume PDFs (1 centered, 2 side by side) with full-screen + download, then Upcoming Projects |
+| `/resume` | Upcoming Projects (optionally linked), then up to 2 resume PDFs (1 centered, 2 side by side) with full-screen + download |
 | `/contact` | Contact form (Web3Forms) + whatever contact fields are filled in |
 | `/studio` | Sanity Studio — Eddy's editing UI |
+
+Browser-tab icon is generated from `src/app/icon.tsx` — the header's boxed "EL" monogram.
+
+Paragraph fields with a formatting toolbar (Actor intro, Director statement) are Portable Text
+(`introRich` / `statementRich`) rendered by `RichText`, which falls back to the pre-toolbar
+plain-text field so a page never blanks mid-migration.
+
+Section labels (`eyebrow`) and section headings coalesce to standard wording when unset;
+content fields still follow blank-means-hidden.
 
 The studio mirrors the site: one document per page, in menu order. Repeatable content
 (galleries, productions, videos) stays as separate documents but is **ordered by a

@@ -58,6 +58,14 @@ export const contactPage = defineType({
 
     // --- Page text ---
     defineField({
+      name: "eyebrow",
+      title: "Section label",
+      type: "string",
+      group: "text",
+      description: 'The small label above the headline. Defaults to "Contact" if left blank.',
+      initialValue: "Contact",
+    }),
+    defineField({
       name: "heading",
       title: "Page headline",
       type: "string",

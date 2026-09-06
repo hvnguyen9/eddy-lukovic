@@ -1,14 +1,22 @@
 {
   "heading": "The director's cut.",
-  "leadImage": { "src": "/images/still-02.svg", "alt": "On stage — directing work" },
+  "leadImage": {
+    "src": "/images/still-02.svg",
+    "alt": "On stage — directing work"
+  },
   "quote": {
     "text": "A production of uncommon nerve and tenderness.",
     "attribution": "San Diego Union-Tribune",
     "size": "medium",
     "color": "light",
     "position": "bottom-left",
-    "scrim": true
+    "scrim": true,
+    "align": "left",
+    "shadow": true,
+    "quotationMarks": true
   },
   "statement": "I direct small rooms with big stakes — chamber plays and short films where the audience sits close enough to feel implicated. I care about actors first: the work is built in rehearsal, out of behavior, not blocking.",
-  "productionsHeading": "Productions"
+  "productionsHeading": "Productions",
+  "eyebrow": "Director",
+  "statementRich": []
 }

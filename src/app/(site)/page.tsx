@@ -11,9 +11,11 @@ export default async function HomePage() {
 
   return (
     <section className="relative overflow-hidden">
+      {/* Decorative only — pointer-events-none so it can never swallow
+          clicks meant for the buttons underneath it. */}
       <span
         aria-hidden
-        className="ghost-text display absolute -bottom-8 left-1/2 -translate-x-1/2 text-[24vw] leading-none font-semibold whitespace-nowrap italic"
+        className="ghost-text display pointer-events-none absolute -bottom-8 left-1/2 -translate-x-1/2 text-[24vw] leading-none font-semibold whitespace-nowrap italic"
       >
         {home.lastName}
       </span>

@@ -31,7 +31,7 @@ export default async function AboutPage() {
       </div>
 
       <div>
-        <p className="eyebrow">About</p>
+        {about.eyebrow && <p className="eyebrow">{about.eyebrow}</p>}
         <AccentHeading text={about.heading} />
         {about.paragraphs.length > 0 && (
           <div className="mt-8 max-w-xl space-y-5 text-lg leading-relaxed text-ink-soft">

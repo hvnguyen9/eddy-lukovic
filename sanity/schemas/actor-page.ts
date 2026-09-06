@@ -7,6 +7,13 @@ export const actorPage = defineType({
   description: "The Actor page. Videos and photo galleries are edited in the lists under this page.",
   fields: [
     defineField({
+      name: "eyebrow",
+      title: "Section label",
+      type: "string",
+      description: 'The small label above the headline. Defaults to "Actor" if left blank.',
+      initialValue: "Actor",
+    }),
+    defineField({
       name: "heading",
       title: "Page headline",
       type: "string",
@@ -35,11 +42,11 @@ export const actorPage = defineType({
       ],
     }),
     defineField({
-      name: "intro",
+      name: "introRich",
       title: "Intro paragraph",
-      type: "text",
-      rows: 5,
-      description: "Shown beside the main image. Press Enter for line breaks.",
+      type: "richText",
+      description:
+        "Shown beside the main image. Select any words and use the toolbar (or Cmd+I) to italicize them. Enter starts a new paragraph.",
     }),
     defineField({
       name: "videosHeading",

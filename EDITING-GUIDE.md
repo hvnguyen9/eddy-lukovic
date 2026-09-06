@@ -20,29 +20,33 @@ Two rules that explain almost everything:
 name, the home page headshot, and the buttons (each button is a label plus where it goes, like
 `/actor` or `/resume`). Delete a button to hide it.
 
-**About** — the page headline, your bio paragraphs, the pull quote, the main photo, and the
-candid photos (the montage of three-across thumbnails under the main photo; visitors can click
-one to see it full size).
+**About** — the section label, the page headline, your bio paragraphs, the pull quote, the
+main photo, and the candid photos (the montage of three-across thumbnails under the main
+photo; visitors can click one to see it full size).
 
-**Actor Page** — the headline, main image, extra images (they appear as thumbnails under the
-main one), your intro paragraph, and the two section headings ("Videos" and "Photos").
-Underneath the page you'll also find:
-- **Photo Galleries** — one per label (e.g. "Headshots", or a production name). Inside a
-  gallery, the first photo is the lead image and the rest become thumbnails.
+**Actor Page** — the section label, headline, main image, extra images (they appear as
+thumbnails under the main one), your intro paragraph, and the two section headings ("Videos"
+and "Photos"). Underneath the page you'll also find:
+- **Photo Galleries** — one per label (e.g. "Headshots", or a production name). Each gallery
+  can also carry the **production/venue, your role, and the year**, shown under the title.
+  Inside a gallery, the first photo is the lead image and the rest become thumbnails.
 - **Videos** — paste a YouTube or Vimeo link and the site builds the player.
 
-**Director Page** — the headline, the wide lead image, an optional **review quote laid over
-that image** (with controls for its size, color, and where it sits on the photo), your
-artistic statement, and the "Productions" heading. Underneath the page:
+**Director Page** — the section label, headline, the wide lead image, an optional **review
+quote laid over that image**, your artistic statement, and the production photos heading.
+The quote appears exactly as you type it — press Enter wherever you want a new line — and you
+control its size, color, drop shadow, quotation marks, where it sits on the photo, and how the
+lines are justified (left / center / right). Underneath the page:
 - **Productions** — one per show: title, year, venue, your role, description, a cover photo
   (the lead image), the photo gallery, and an optional video link.
 
-**Resume Page** — up to two resume PDFs. One shows centered; two show side by side. Each has
-buttons to view full screen and to download. Below them is **Upcoming Projects** — leave that
-list empty and the whole section disappears from the page.
+**Resume Page** — **Upcoming Projects** sits at the top (each one can carry a link, so the
+title becomes clickable through to a ticket page or theatre site); leave that list empty and
+the whole section disappears. Below it go up to two resume PDFs — one shows centered, two show
+side by side, each with buttons to view full screen and to download.
 
 **Contact Page** — your email, phone, social links, and representation, plus every bit of text
-on the page (headline, field labels, button, thank-you message). The **contact form key** also
+on the page (section label, headline, field labels, button, thank-you message). The **contact form key** also
 lives here: get a free key at web3forms.com (enter the email that should receive messages),
 paste it in, Publish, and the form starts delivering to your inbox.
 
@@ -59,6 +63,22 @@ website:
 - Press **＋** to add one: pick something you've already made, or create a new one right there.
 - **Removing** an item from the list hides it from the page without deleting it.
 - If a list is left completely empty, everything of that kind shows up, oldest first.
+
+## Italics and formatting
+
+The **Actor intro** and the **Director artistic statement** have a formatting toolbar. Select
+any words and click the italic button (or press Cmd+I) — you can also bold text or turn a
+phrase into a link. Press Enter to start a new paragraph.
+
+> If your existing text still shows as plain, it was written before the toolbar existed. Paste
+> it into the new box once and you can format it from then on.
+
+## Section labels and headings
+
+The small label at the top of each page ("About", "Actor", …) and the section headings
+("Videos", "Photos", "Production Photos", "Upcoming Projects") are all editable on their
+page. Unlike the other fields, these fall back to their standard wording if left blank rather
+than disappearing — type your own to change them.
 
 ## Tips
 

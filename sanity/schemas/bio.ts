@@ -9,6 +9,13 @@ export const bio = defineType({
   description: "Everything that appears on the About page.",
   fields: [
     defineField({
+      name: "eyebrow",
+      title: "Section label",
+      type: "string",
+      description: 'The small label above the headline. Defaults to "About" if left blank.',
+      initialValue: "About",
+    }),
+    defineField({
       name: "heading",
       title: "Page headline",
       type: "string",

@@ -3,6 +3,7 @@ import Image from "next/image";
 import { AccentHeading } from "@/components/accent-heading";
 import { GalleryViewer } from "@/components/gallery-viewer";
 import { ImageQuote } from "@/components/image-quote";
+import { RichText } from "@/components/rich-text";
 import { SectionHeading } from "@/components/section-heading";
 import { getDirectorPage, getProjects, toEmbedUrl } from "@/lib/content";
 
@@ -30,13 +31,14 @@ export default async function DirectorPage() {
 
       {/* Artistic statement */}
       <section className="mx-auto max-w-6xl px-6 pt-10 pb-10 md:pt-14">
-        <p className="eyebrow">Director</p>
+        {page.eyebrow && <p className="eyebrow">{page.eyebrow}</p>}
         <AccentHeading text={page.heading} />
-        {page.statement && (
-          <p className="display mt-8 text-xl leading-relaxed whitespace-pre-line sm:text-2xl">
-            {page.statement}
-          </p>
-        )}
+        {/* Same body type as the About and Actor paragraphs */}
+        <RichText
+          value={page.statementRich}
+          fallback={page.statement}
+          className="mt-8 max-w-3xl text-lg leading-relaxed text-ink-soft"
+        />
       </section>
 
       {/* Production galleries — lead photo + thumbnails per production */}

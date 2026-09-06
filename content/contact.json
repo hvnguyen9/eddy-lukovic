@@ -11,7 +11,17 @@
   "successText": "Thanks for reaching out — you'll hear back soon.",
   "email": "contact@eddylukovic.com",
   "phone": "",
-  "socials": [{ "label": "Instagram", "url": "https://www.instagram.com/elukes" }],
-  "representation": { "label": "Representation", "name": "", "contact": "" },
-  "contactFormKey": ""
+  "socials": [
+    {
+      "label": "Instagram",
+      "url": "https://www.instagram.com/elukes"
+    }
+  ],
+  "representation": {
+    "label": "Representation",
+    "name": "",
+    "contact": ""
+  },
+  "contactFormKey": "",
+  "eyebrow": "Contact"
 }

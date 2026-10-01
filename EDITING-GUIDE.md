@@ -14,6 +14,13 @@ Two rules that explain almost everything:
    placeholder text, no empty box. Delete the text to hide something; type it back in to
    bring it back.
 
+## Publishing everything at once
+
+Each page has its own Publish button, but you don't have to go page by page.
+Click **Publish All** in the top bar and you'll see a list of every unpublished
+change across the whole site, with one button to publish them all. If the list
+is empty, everything is already live.
+
 ## The pages
 
 **Home Page** — your name, the tagline above it, your location, the short bio line below your

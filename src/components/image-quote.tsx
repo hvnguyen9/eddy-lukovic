@@ -20,10 +20,12 @@ const ALIGN = {
   right: "text-right",
 } as const;
 
+// Scales down on narrow screens so the author's own line breaks survive
+// instead of the browser adding its own.
 const SIZE = {
-  small: "text-base sm:text-xl",
-  medium: "text-xl sm:text-3xl",
-  large: "text-2xl sm:text-5xl",
+  small: "text-sm sm:text-lg md:text-xl",
+  medium: "text-base sm:text-2xl md:text-3xl",
+  large: "text-lg sm:text-3xl md:text-5xl",
 } as const;
 
 const COLOR = {
@@ -60,7 +62,9 @@ export function ImageQuote({ quote }: { quote: ImageQuoteData }) {
         />
       )}
       <figure className={`relative flex size-full p-6 sm:p-12 ${placement}`}>
-        <div className={`max-w-2xl ${align}`}>
+        {/* Wide enough that the author's own line breaks are the only
+              breaks on a normal screen. */}
+          <div className={`max-w-5xl ${align}`}>
           {/* whitespace-pre-line keeps the line breaks exactly as typed */}
           <blockquote
             className={`display leading-tight whitespace-pre-line italic ${shadow} ${

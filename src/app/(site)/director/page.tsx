@@ -37,7 +37,7 @@ export default async function DirectorPage() {
         <RichText
           value={page.statementRich}
           fallback={page.statement}
-          className="mt-8 max-w-3xl text-lg leading-relaxed text-ink-soft"
+          className="mt-8 text-lg leading-relaxed text-ink-soft"
         />
       </section>
 

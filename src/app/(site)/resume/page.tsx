@@ -13,11 +13,10 @@ export default async function ResumePage() {
   return (
     <section className="mx-auto max-w-6xl px-6 pt-10 pb-14 md:pt-14">
       {page.eyebrow && <p className="eyebrow">{page.eyebrow}</p>}
-      <AccentHeading text={page.heading} />
 
       {/* Upcoming work leads the page — it's the most current news */}
       {upcoming.length > 0 && (
-        <div className="mt-10">
+        <div className="mt-8">
           <SectionHeading text={page.upcomingHeading} />
           <ul className="mt-6 divide-y divide-line border-y border-line">
             {upcoming.map((project) => (
@@ -58,14 +57,18 @@ export default async function ResumePage() {
       )}
 
       {resumes.length > 0 ? (
-        <div
-          className={`grid gap-10 ${upcoming.length > 0 ? "mt-16" : "mt-10"} ${
-            resumes.length > 1 ? "md:grid-cols-2" : "mx-auto max-w-xl"
-          }`}
-        >
-          {resumes.map((resume) => (
-            <ResumeCard key={resume.fileUrl} resume={resume} />
-          ))}
+        <div className={upcoming.length > 0 ? "mt-16" : "mt-6"}>
+          {/* The page headline introduces the resume itself */}
+          <AccentHeading text={page.heading} className="display text-4xl font-medium sm:text-5xl" />
+          <div
+            className={`grid gap-10 ${page.heading ? "mt-8" : "mt-2"} ${
+              resumes.length > 1 ? "md:grid-cols-2" : "mx-auto max-w-xl"
+            }`}
+          >
+            {resumes.map((resume) => (
+              <ResumeCard key={resume.fileUrl} resume={resume} />
+            ))}
+          </div>
         </div>
       ) : (
         <p className="mt-10 max-w-md leading-relaxed text-ink-soft">

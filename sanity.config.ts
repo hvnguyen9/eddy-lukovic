@@ -5,6 +5,7 @@ import { structureTool, type StructureBuilder } from "sanity/structure";
 import { visionTool } from "@sanity/vision";
 import { apiVersion, dataset, projectId } from "./sanity/env";
 import { schemaTypes } from "./sanity/schemas";
+import { PublishAllTool } from "./sanity/tools/publish-all";
 
 // One entry per page of the website, in menu order. Repeatable content
 // (galleries, productions, videos) is nested under the page it belongs to;
@@ -84,6 +85,12 @@ export default defineConfig({
         ? prev.filter(({ action }) => action !== "duplicate" && action !== "delete")
         : prev,
   },
+  // "Publish All" sits beside Content in the top bar, so every pending change
+  // can go live in one click instead of page by page.
+  tools: (prev) => [
+    ...prev,
+    { name: "publish-all", title: "Publish All", component: PublishAllTool },
+  ],
   plugins: [
     structureTool({ structure }),
     // Vision is a developer query console — keep it out of Eddy's studio.
